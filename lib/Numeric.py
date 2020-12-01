@@ -6,6 +6,10 @@ from sklearn import preprocessing
 
 class Numeric():
 
+    def __init__(self, logger, latency):
+        self.logger = logger
+        self.latency = latency
+
     def convert_to_numeric(self, df,target,classification = True):
 
         # getting categorical and continous dtypes

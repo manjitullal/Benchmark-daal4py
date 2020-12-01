@@ -1,0 +1,5 @@
+30-Nov-20 20:14:03 : 15210 : INFO : Intell DAAL4PY Logs initiated!
+30-Nov-20 20:14:03 : 15210 : INFO : Current time: 2020-11-30__20.14
+30-Nov-20 20:14:03 : 15210 : INFO : spliting the data frame into Train and test
+30-Nov-20 20:14:04 : 15210 : INFO : Data exported to JSON successfully!
+30-Nov-20 20:14:04 : 15210 : INFO : Program completed normally
