@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 
 from linear_reg import LinearReg
 from lib.Numeric import Numeric 
+from Serial_2 import Serial_2
 
 
 
@@ -53,3 +54,18 @@ y_pred, mse, r2score = reg.serial_pydaal(X_train, X_test, y_train, y_test, targe
 
 print("Dist Daal 4 py MSE", mse,'\n')
 
+
+#Serial
+serial = Serial_2()
+
+ridge_predict, ridge_time = serial.ridgeRegression(X_train, X_test, y_train, y_test, target)
+print("Serial ridge result", ridge_predict,'\n')
+print("Serial ridge Time", ridge_time,'\n')
+
+kmeans_result, kmeans_time = serial.KMeans(10, df) 
+print("Serial kmeans result", kmeans_result,'\n')
+print("Serial kmeans Time", kmeans_time,'\n')
+
+svd_result, svd_time = serial.svd(df)
+print("Serial svd result", svd_result,'\n')
+print("Serial svd Time", svd_time,'\n')
