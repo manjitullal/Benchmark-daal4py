@@ -88,6 +88,23 @@ class mains():
 
         return logger
 
+    def data_split(self, data):
+        num = data.shape
+        num_each = round(num[0]/3)-1
+
+        l=0
+        
+        for i in range(3):
+            df = data[l:num_each]
+            l =+ num_each
+            num_each =+ num_each
+            filename = '/home/maheshwarappa.a/RC_Benchmark/HPC_AI_SKUNKWORKS/Benchmark-daal4py/dist_data/' + key +'_'+str(i+1)+'.csv'
+            df.to_csv(filename, index = False)
+
+
+
+
+
 
     def main(self):
 
@@ -104,6 +121,8 @@ class mains():
         target = 'charges'
 
         df, dict_df = num.convert_to_numeric(data, target, False)
+
+        self.data_split(df)
 
 
 
@@ -137,9 +156,9 @@ class mains():
 
         print("Daal seial daal4py MSE", mse,'\n')
 
-        result_pca_pydaal = serial.serial_pca_pydaal(X)
+        # result_pca_pydaal = serial.serial_pca_pydaal(X)
 
-        result_pca_sk_learn = serial.serial_pca_sk_learn(X)
+        # result_pca_sk_learn = serial.serial_pca_sk_learn(X)
 
         y_pred, mse, r2score = parallel.parallel_linear_sk_learn(X_train, X_test, y_train, y_test, target)
 
