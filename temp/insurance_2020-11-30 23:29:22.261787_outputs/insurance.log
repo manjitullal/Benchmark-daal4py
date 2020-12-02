@@ -1,0 +1,9 @@
+30-Nov-20 23:29:22 : 33238 : INFO : Intell DAAL4PY Logs initiated!
+30-Nov-20 23:29:22 : 33238 : INFO : Current time: 2020-11-30__23.29
+30-Nov-20 23:29:22 : 33238 : INFO : spliting the data frame into Train and test
+30-Nov-20 23:29:22 : 33238 : INFO : Training the Linear Regression in Sk learn
+30-Nov-20 23:29:22 : 33238 : INFO : Predictions done successfully..!!!
+30-Nov-20 23:29:22 : 33238 : INFO : Training the Linear Regression in pydaal
+30-Nov-20 23:29:22 : 33238 : INFO : Training the parallel Linear Regression in Sk learn
+30-Nov-20 23:29:22 : 33238 : INFO : Predictions done successfully..!!!
+30-Nov-20 23:29:22 : 33238 : INFO : Training the Linear Regression in pydaal
