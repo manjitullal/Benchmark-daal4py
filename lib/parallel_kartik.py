@@ -27,33 +27,43 @@ class Parallel_k():
             self.metrics = metrics
 
     # Ridge Regression
-    def ridgeRegression(self, X_train, X_test, y_train, y_test, target):
+    def ridgeRegression(self, Data_Path, X_test,y_test, target):
         start_time = time.time()
+        d4p.daalinit()
+        file = Data_Path + str(d4p.my_procid()+1)+".csv"
         train_algo = d4p.ridge_regression_training(distributed=True, interceptFlag=True)
-        train_result = train_algo.compute(X_train, y_train)
-        predict_algo = d4p.ridge_regression_prediction()
-        predict_result = predict_algo.compute(X_test, train_result.model)
-        # stop_time = time.time()
-        pd_predict = predict_result.prediction
-        mse = mean_squared_error(y_test, pd_predict)
-        r2score = r2_score(y_test, pd_predict)
-        return (pd_predict, mse, r2score, time.time() - start_time)
+        data = pd.read_csv(file)
+        X = data.drop(columns=target)
+        y= data[target]
+        train_result = train_algo.compute(X, y)
+        if d4p.my_procid() == 0:
+            predict_algo = d4p.ridge_regression_prediction()
+            # now predict using the model from the training above
+            predict_result = d4p.ridge_regression_prediction().compute(X_test, train_result.model)
+            # The prediction result provides prediction
+            assert predict_result.prediction.shape == (X_test.shape[0], y_test.shape[1])
+        print('Ridge completed!')
+        d4p.daalfini()
+        mse = mean_squared_error(y_test, predict_result.prediction)
+        r2score = r2_score(y_test, predict_result.prediction)
+        return (predict_result.prediction, mse, r2score, time.time() - start_time)
 
-    def KMeans(self, nClusters, X):
+    def KMeans(self, nClusters, Data_PAth):
         kmeans_start_time = time.time()
-        maxIter = 5
-        init_algo = d4p.kmeans_init(nClusters=nClusters, distributed=True, method="randomDense")
-        train_result = init_algo.compute(X)
-        # The results provides the initial centroids
-        assert train_result.centroids.shape[0] == nClusters
-        # configure kmeans main object: we also request the cluster assignments
-        algo = d4p.kmeans(nClusters, maxIter, assignFlag=True)
-        # compute the clusters/centroids
-        result = algo.compute(X, train_result.centroids)
-        # Kmeans result objects provide assignments (if requested), centroids, goalFunction, nIterations and objectiveFunction
-        assert result.centroids.shape[0] == nClusters
-        assert result.assignments.shape == (X.shape[0], 1)
-        assert result.nIterations <= maxIter
+        maxIter = 25
+        d4p.daalinit()
+        data = Data_Path + str(d4p.my_procid()) + ".csv"
+        init_algo = d4p.kmeans_init(nClusters=nClusters, distributed=True, method="plusPlusDense")
+        # compute initial centroids
+        centroids = init_algo.compute(data).centroids
+        init_result = init_algo.compute(data)
+        if d4p.my_procid() == 0:
+            # configure kmeans main object
+            algo = d4p.kmeans(nClusters, maxIter, distributed=True)
+            # compute the clusters/centroids
+            result = algo.compute(data, init_result.centroids)
+            # The results provides the initial centroids
+            assert result.centroids.shape[0] == nClusters
         return (result, time.time() - kmeans_start_time)
 
     def svd(self, data):

@@ -26,26 +26,22 @@ from sklearn.metrics import mean_squared_error, r2_score
 class parallel_abhi():
 
     def __init__(self, logger, latency, metrics):
-            self.logger = logger
-            self.latency = latency
-            self.metrics = metrics
-    
-    
-    def parallel_linear_sk_learn(self, X_train, X_test, y_train, y_test, target):
+        self.logger = logger
+        self.latency = latency
+        self.metrics = metrics
 
-        
-        regr = linear_model.LinearRegression(n_jobs = -1)
-        
+    def parallel_linear_sk_learn(self, X_train, X_test, y_train, y_test, target):
+        regr = linear_model.LinearRegression(n_jobs=-1)
+
         start = time.time()
         # Train the model using the training sets
 
         self.logger.info('Training the parallel Linear Regression in Sk learn')
-        model = regr.fit(X_train,y_train)
+        model = regr.fit(X_train, y_train)
 
         self.latency['Time for parallel Linear Regression sk_learn'] = time.time() - start
 
         # Make predictions using the testing set
-
 
         y_pred = regr.predict(X_test)
         self.logger.info('Predictions done successfully..!!!')
@@ -60,27 +56,22 @@ class parallel_abhi():
 
         return y_pred, mse, r2_score
 
-
     def parallel_linear_pydaal(self, X_train, X_test, y_train, y_test, target):
-        
         d4p.daalinit()
 
         start = time.time()
 
-        d4p_lm = d4p.linear_regression_training(method = 'qrDense', distributed=True)
+        d4p_lm = d4p.linear_regression_training(method='qrDense', distributed=True)
 
         self.logger.info('Training the Linear Regression in pydaal')
-        lm_trained = d4p_lm.compute(X_train, y_train )
-
+        lm_trained = d4p_lm.compute(X_train, y_train)
 
         self.latency['Time for serial parallel Regression pydaal'] = time.time() - start
 
         y_pred = d4p.linear_regression_prediction().compute(X_test, lm_trained.model).prediction
 
-
-
         mse = mean_squared_error(y_test, y_pred)
-        
+
         self.metrics['MSE_serial_parallel_regression_pydaal'] = mse
 
         r2score = r2_score(y_test, y_pred)
@@ -91,24 +82,19 @@ class parallel_abhi():
 
         return y_pred, mse, r2score
 
-
-    ef parallel_pca_sk_learn(self, data):
-        
+    def parallel_pca_sk_learn(self, data):
         start = time.time()
-        
+
         pca = PCA(n_components=10)
-        
+
         self.logger.info('serial PCA in  SK_learn')
         result = pca.fit(data)
-        
-        self.latency['Time for serial PCA sk_learn'] = time.time() - start
 
+        self.latency['Time for serial PCA sk_learn'] = time.time() - start
 
         return result
 
-
     def serial_pca_pydaal(self, data):
-
         start = time.time()
 
         zscore = d4p.normalization_zscore()
@@ -116,12 +102,11 @@ class parallel_abhi():
 
         self.logger.info('Training the serial PCA in  pydaal')
 
-        algo = d4p.pca(resultsToCompute="mean|variance|eigenvalue",nComponents = 10, isDeterministic=True, normalization=zscore)
+        algo = d4p.pca(resultsToCompute="mean|variance|eigenvalue", nComponents=10, isDeterministic=True,
+                       normalization=zscore)
 
         result = algo.compute(data)
 
         self.latency['Time for serial PCA pydaal'] = time.time() - start
 
-
         return result
-
