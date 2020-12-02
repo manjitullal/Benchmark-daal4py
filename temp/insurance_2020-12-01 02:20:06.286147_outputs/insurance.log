@@ -1,0 +1,14 @@
+01-Dec-20 02:20:06 : 12887 : INFO : Intell DAAL4PY Logs initiated!
+01-Dec-20 02:20:06 : 12887 : INFO : Current time: 2020-12-01__02.20
+01-Dec-20 02:20:06 : 12887 : INFO : spliting the data frame into Train and test
+01-Dec-20 02:20:06 : 12887 : INFO : Training the Linear Regression in Sk learn
+01-Dec-20 02:20:06 : 12887 : INFO : Predictions done successfully..!!!
+01-Dec-20 02:20:06 : 12887 : INFO : Training the Linear Regression in pydaal
+01-Dec-20 02:20:06 : 12887 : INFO : Training the parallel Linear Regression in Sk learn
+01-Dec-20 02:20:06 : 12887 : INFO : Predictions done successfully..!!!
+01-Dec-20 02:20:06 : 12887 : INFO : Training the Linear Regression in pydaal
+01-Dec-20 02:20:07 : 12887 : INFO : Exporting the latency
+01-Dec-20 02:20:07 : 12887 : INFO : Data exported to JSON successfully!
+01-Dec-20 02:20:07 : 12887 : INFO : Exporting the Metrics
+01-Dec-20 02:20:07 : 12887 : INFO : Data exported to JSON successfully!
+01-Dec-20 02:20:07 : 12887 : INFO : Program completed normally

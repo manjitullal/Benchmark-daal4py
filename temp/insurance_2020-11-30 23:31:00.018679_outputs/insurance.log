@@ -1,0 +1,14 @@
+30-Nov-20 23:31:00 : 33418 : INFO : Intell DAAL4PY Logs initiated!
+30-Nov-20 23:31:00 : 33418 : INFO : Current time: 2020-11-30__23.31
+30-Nov-20 23:31:00 : 33418 : INFO : spliting the data frame into Train and test
+30-Nov-20 23:31:00 : 33418 : INFO : Training the Linear Regression in Sk learn
+30-Nov-20 23:31:00 : 33418 : INFO : Predictions done successfully..!!!
+30-Nov-20 23:31:00 : 33418 : INFO : Training the Linear Regression in pydaal
+30-Nov-20 23:31:00 : 33418 : INFO : Training the parallel Linear Regression in Sk learn
+30-Nov-20 23:31:00 : 33418 : INFO : Predictions done successfully..!!!
+30-Nov-20 23:31:00 : 33418 : INFO : Training the Linear Regression in pydaal
+30-Nov-20 23:31:00 : 33418 : INFO : Exporting the latency
+30-Nov-20 23:31:00 : 33418 : INFO : Data exported to JSON successfully!
+30-Nov-20 23:31:00 : 33418 : INFO : Exporting the Metrics
+30-Nov-20 23:31:00 : 33418 : INFO : Data exported to JSON successfully!
+30-Nov-20 23:31:00 : 33418 : INFO : Program completed normally
