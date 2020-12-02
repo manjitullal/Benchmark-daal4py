@@ -62,7 +62,7 @@ class Parallel_a():
             predict_result = predict_algo.compute(X_test, train_result.model)
 
             # The prediction result provides prediction
-            assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
+            #assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
 
         self.logger.info('Completed Linear Regression in pydaal SPMD Mode')
         d4p.daalfini()
@@ -76,12 +76,16 @@ class Parallel_a():
         self.metrics['r2score_Parallel_LinearRegression_Pydaal'] = r2score
         self.latency['Parallel_LinearRegression_Pydaal_Time'] = time.time() - start
 
-        return predict_result.prediction
+        time.sleep(4)
+
+        exit(0)
+
+        return 
 
 
 
     # daal4py PCA SPMD Mode
-    def pca(self, Data_Path):
+    def pca(self, Data_Path, target):
 
         start = time.time()
 
@@ -91,8 +95,7 @@ class Parallel_a():
         # Train setup
         file_path = Data_Path + str(d4p.my_procid()) + ".csv"
         data = pd.read_csv(file_path)
-
-        # zscore = d4p.normalization_zscore() - To be removed????
+        data = data.drop(target, axis =1)
 
         # configure a PCA object
         algo = d4p.pca(method='svdDense', distributed=True)
@@ -110,7 +113,7 @@ class Parallel_a():
 
         self.latency['Parallel_PCA_SPMD_Time'] = time.time() - start
 
-        return result
+        return 
 
 
 
@@ -151,7 +154,7 @@ class Parallel_a():
             presult = predict_algo.compute(X_test, train_result.model)
 
             # Prediction result provides prediction
-            assert (presult.prediction.shape == (pdata.shape[0], 1))
+            #assert (presult.prediction.shape == (X_test.shape[0], 1))
 
             print('Naive Bayes Result', presult.prediction)
 
@@ -167,7 +170,7 @@ class Parallel_a():
         self.metrics['r2score_Parallel_NaiveBayes_Pydaal'] = r2score
         self.latency['Parallel_NaiveBayes_Pydaal_Time'] = time.time() - start
 
-        return presult.prediction
+        return 
 
 
 
