@@ -90,3 +90,38 @@ class parallel_abhi():
         d4p.daalfini()
 
         return y_pred, mse, r2score
+
+
+    ef parallel_pca_sk_learn(self, data):
+        
+        start = time.time()
+        
+        pca = PCA(n_components=10)
+        
+        self.logger.info('serial PCA in  SK_learn')
+        result = pca.fit(data)
+        
+        self.latency['Time for serial PCA sk_learn'] = time.time() - start
+
+
+        return result
+
+
+    def serial_pca_pydaal(self, data):
+
+        start = time.time()
+
+        zscore = d4p.normalization_zscore()
+        # configure a PCA object
+
+        self.logger.info('Training the serial PCA in  pydaal')
+
+        algo = d4p.pca(resultsToCompute="mean|variance|eigenvalue",nComponents = 10, isDeterministic=True, normalization=zscore)
+
+        result = algo.compute(data)
+
+        self.latency['Time for serial PCA pydaal'] = time.time() - start
+
+
+        return result
+
