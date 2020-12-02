@@ -1,0 +1,15 @@
+01-Dec-20 12:23:07 : 7113 : INFO : Intell DAAL4PY Logs initiated!
+01-Dec-20 12:23:07 : 7113 : INFO : Current time: 2020-12-01__12.23
+01-Dec-20 12:23:08 : 7113 : INFO : spliting the data frame into Train and test
+01-Dec-20 12:23:08 : 7113 : INFO : Training the Linear Regression in Sk learn
+01-Dec-20 12:23:08 : 7113 : INFO : Predictions done successfully..!!!
+01-Dec-20 12:23:08 : 7113 : INFO : Training the Linear Regression in pydaal
+01-Dec-20 12:23:08 : 7113 : INFO : Training the serial PCA pydaal
+01-Dec-20 12:23:08 : 7113 : INFO : Training the parallel Linear Regression in Sk learn
+01-Dec-20 12:23:08 : 7113 : INFO : Predictions done successfully..!!!
+01-Dec-20 12:23:08 : 7113 : INFO : Training the Linear Regression in pydaal
+01-Dec-20 12:23:08 : 7113 : INFO : Exporting the latency
+01-Dec-20 12:23:08 : 7113 : INFO : Data exported to JSON successfully!
+01-Dec-20 12:23:08 : 7113 : INFO : Exporting the Metrics
+01-Dec-20 12:23:08 : 7113 : INFO : Data exported to JSON successfully!
+01-Dec-20 12:23:08 : 7113 : INFO : Program completed normally
