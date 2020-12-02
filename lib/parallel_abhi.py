@@ -92,7 +92,7 @@ class parallel_abhi():
         return y_pred, mse, r2score
 
 
-    ef parallel_pca_sk_learn(self, data):
+    def parallel_pca_sk_learn(self, data):
         
         start = time.time()
         
