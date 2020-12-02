@@ -58,7 +58,7 @@ class Parallel_k():
             # now predict using the model from the training above
             predict_result = predict_algo.compute(X_test, train_result.model)
             # The prediction result provides prediction
-            assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
+            # assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
 
         self.logger.info('Completed Ridge Regression in pydaal SPMD Mode')
         d4p.daalfini()
@@ -72,13 +72,13 @@ class Parallel_k():
         self.metrics["MSE For Parallel Ridge regression SPMD"] = mse
         self.metrics["R2 Score For Parallel Ridge regression SPMD"] = r2score
 
-        return predict_result.prediction
+        return 
 
 
 
     #daal4py KMeans Clustering SPMD Mode
-    def kMeans(self, nClusters, Data_Path):
-
+    def kMeans(self,Data_Path):
+        nClusters = 4
         kmeans_start_time = time.time()
         maxIter = 25 #fixed maximum number of itertions
 
@@ -103,7 +103,7 @@ class Parallel_k():
         result = algo.compute(data, init_result.centroids)
 
         # The result provides the initial centroids
-        assert result.centroids.shape[0] == nClusters
+        # assert result.centroids.shape[0] == nClusters
 
         # result is available on all processes - but we print only on root
         if d4p.my_procid() == 0:
@@ -116,12 +116,12 @@ class Parallel_k():
 
         self.latency["Parallel_KMeans_SPMD_Time"] = time.time() - kmeans_start_time
 
-        return result
+        return 
 
 
 
     # daal4py SVD SPMD Mode
-    def svd(self, Data_Path):
+    def svd(self, Data_Path, target):
 
         svd_start_time = time.time()
 
@@ -131,6 +131,7 @@ class Parallel_k():
         #Train setup
         file_path = Data_Path + str(d4p.my_procid()) + ".csv"
         data = pd.read_csv(file_path)
+        data = data.drop(target, axis =1)
 
         algo = d4p.svd(distributed=True)
         self.logger.info('Training the SVD in pydaal SPMD Mode')
@@ -138,9 +139,9 @@ class Parallel_k():
         #SVD result
         result = algo.compute(data)
 
-        assert result.singularValues.shape == (1, data.shape[1])
-        assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
-        assert result.leftSingularMatrix.shape == data.shape
+        # assert result.singularValues.shape == (1, data.shape[1])
+        # assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
+        # assert result.leftSingularMatrix.shape == data.shape
 
         if hasattr(data, 'toarray'):
             data = data.toarray()  # to make the next assertion work with scipy's csr_matrix
@@ -157,7 +158,7 @@ class Parallel_k():
         
         self.latency["Parallel_SVD_SPMD_Time"] = time.time() - svd_start_time
 
-        return result
+        return 
 
 #TO BE COMPLETED
     # def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):

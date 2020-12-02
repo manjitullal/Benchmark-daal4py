@@ -15,12 +15,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-from lib.serial_abhi import serial_abhi
-from lib.parallel_abhi import parallel_abhi
+# from lib.serial_abhi import Serial_a
+# from lib.serial_kartik import Serial_k
+from lib.parallel_abhi import Parallel_a
+from lib.parallel_kartik import Parallel_k
 from lib.Numeric import Numeric
 from lib.Input_Output_files_functions import Input_Ouput_functions 
 
-path = '/home/maheshwarappa.a/RC_Benchmark/HPC_AI_SKUNKWORKS/Benchmark-daal4py/data/'
+path = './data/'
 files = os.listdir(path)
 print("\n\n")
 print("***************************************************************")
@@ -37,12 +39,27 @@ key = input('Which Data to train? \n')
 
 data = pd.read_csv("data/" + key + ".csv", error_bad_lines=False)
 
+while(1):
+    print("\n The columns present are\n\n", data.columns)
+    list_cols = data.columns.to_list()
+    print("\nChoose the target coulum\n")
+    target = input()
+    if target in list_cols :
+        if data[target].isnull().sum()==0:
+            break
+        print("\n\nThe selected target Contains Null values, select other target")
+    print("\nThe typed value is not present in the columns, try retyping it\n")
+
+print("Run options")
+print("1. Serial\n")
+print("2. Parallel\n")
+type_key = input("Want to run parallel or serial?")
 
 # run folder which will be unique always
 run_folder = '{}_'.format(
-    key) + str(datetime.datetime.now()) + '_outputs'
+    key)+type_key + str(datetime.datetime.now()) + '_outputs'
 # temprary folder location to export the results
-temp_folder = "/home/maheshwarappa.a/RC_Benchmark/HPC_AI_SKUNKWORKS/Benchmark-daal4py/temp/"
+temp_folder = "./temp/"
 # target folder to export all the result
 target_dir = temp_folder + '/' + run_folder
 
@@ -89,19 +106,27 @@ class mains():
         return logger
 
     def data_split(self, data):
+
+        '''
+        This funtion helps to generate the data
+        required for multiprocessing
+        '''
+        self.logger.info(" The Data spliting process started")
         num = data.shape
-        num_each = round(num[0]/3)-1
+        num_each = round(num[0]/3)
 
         l=0
-        
+        nums = num_each
+
         for i in range(3):
-            df = data[l:num_each]
-            l =+ num_each
-            num_each =+ num_each
-            filename = '/home/maheshwarappa.a/RC_Benchmark/HPC_AI_SKUNKWORKS/Benchmark-daal4py/dist_data/' + key +'_'+str(i+1)+'.csv'
+            df = data[l:nums]
+            l += num_each
+            nums += num_each
+            if nums > num[0]:
+                nums = num[0]
+            filename = './dist_data/' + key +'_'+str(i+1)+'.csv'
             df.to_csv(filename, index = False)
-
-
+        self.logger.info("Data spliting process done successfuly!!!")
 
 
 
@@ -109,66 +134,94 @@ class mains():
     def main(self):
 
 
-
-
         self.logger.info("Intell DAAL4PY Logs initiated!")
         self.logger.info("Current time: " + str(self.current_time))
 
 
-
+        # creating object for numeric
         num = Numeric(self.logger, self.latency)
-
-        target = 'charges'
-
         df, dict_df = num.convert_to_numeric(data, target, False)
 
-        self.data_split(df)
+        # creating data for distrubuted processing in Pydaal
+        msk = np.random.rand(len(df)) < 0.8
+        train = df[msk]
+        test = df[~msk]
+        filename = './dist_data/' + key +'_test'+'.csv'
+        test.to_csv(filename, index = False)
+        self.data_split(train)
 
 
 
         feature = df.columns.tolist()
         feature.remove(target)
 
-
+        # splitting data into train nd test for serial
         X = df[feature]
-
         y = df[target]
-
-
         self.logger.info('spliting the data frame into Train and test')
-
-
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state =1693)
 
+        if type_key == 'serial':
+            self.logger.info(" Serial Execution starts ..!! ")
+            
+            self.logger.info('Serial Initialization')
+            serial_a = Serial_a(self.logger, self.latency, self.metrics)
+            serial_k = Serial_k(self.logger, self.latency, self.metrics)
 
-        serial = serial_abhi(self.logger, self.latency, self.metrics)
+            # linear Regression
+            serial_a.regression(X_train, X_test, y_train, y_test, target)
 
-        parallel = parallel_abhi(self.logger, self.latency, self.metrics)
+            # Ridge Regression
+            serial_k.ridgeregression(X_train, X_test, y_train, y_test, target)
 
+            # Naive bayes
+            serial_a.naivebayes(X_train, X_test, y_train, y_test, target)
 
+            # K-means Regression
+            serial_a.kmeans(df, target)
 
-        y_pred, mse, r2score = serial.serial_linear_sk_learn(X_train, X_test, y_train, y_test, target)
+            # PCA Regression
+            serial_a.pca(df, target)
 
-        print("SK serial learn MSE", mse,'\n')
+            # SVD Regression
+            serial_a.svd(df, target)
 
-
-        y_pred, mse, r2score = serial.serial_linear_pydaal(X_train, X_test, y_train, y_test, target)
-
-        print("Daal seial daal4py MSE", mse,'\n')
-
-        # result_pca_pydaal = serial.serial_pca_pydaal(X)
-
-        # result_pca_sk_learn = serial.serial_pca_sk_learn(X)
-
-        y_pred, mse, r2score = parallel.parallel_linear_sk_learn(X_train, X_test, y_train, y_test, target)
-
-        print("SK parallel learn MSE", mse,'\n')
+            self.logger.info(" Serial Execution ends..!! ")
 
 
-        y_pred, mse, r2score = parallel.parallel_linear_pydaal(X_train, X_test, y_train, y_test, target)
+        if type_key == 'parallel':
+            self.logger.info(" Parallel Execution starts ..!! ")
+            
+            self.logger.info('Parallel Initialization')
+            parallel_a = Parallel_a(self.logger, self.latency, self.metrics)
+            parallel_k = Parallel_k(self.logger, self.latency, self.metrics)
 
-        print("Daal parallel daal4py MSE", mse,'\n')
 
+            # path for distrubted data and test data
+
+            dist_data_path = './dist_data/' + key +'_'
+            test_data_path = './dist_data/' + key +'_test'+'.csv'
+
+            # parallel linear regression
+            parallel_a.linearRegression(dist_data_path, test_data_path, feature, target)
+            
+            # parallel ridge regression regression
+            parallel_k.ridgeRegression(dist_data_path, test_data_path, feature, target)
+
+            # # parallel linear regression
+            # parallel_k.naiveBayes(dist_data_path, test_data_path, feature, target)
+
+            # # parallel linear regression
+            # parallel_k.kMeans(dist_data_path)
+
+            # # parallel linear regression
+            # parallel_k.pca(dist_data_path,target)
+
+            # # parallel linear regression
+            # parallel_k.svd(dist_data_path,target)
+
+
+        self.logger.info(" Parallel Execution ends..!! ")
     
 
 

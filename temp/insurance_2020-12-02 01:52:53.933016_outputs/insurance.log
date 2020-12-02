@@ -1,0 +1,8 @@
+02-Dec-20 01:52:53 : 7639 : INFO : Intell DAAL4PY Logs initiated!
+02-Dec-20 01:52:53 : 7639 : INFO : Current time: 2020-12-02__01.52
+02-Dec-20 01:52:54 : 7639 : INFO :  The Data spliting process started
+02-Dec-20 01:52:54 : 7639 : INFO : Data spliting process done successfuly!!!
+02-Dec-20 01:52:54 : 7639 : INFO : spliting the data frame into Train and test
+02-Dec-20 01:52:54 : 7639 : INFO :  Parallel Execution starts ..!! 
+02-Dec-20 01:52:54 : 7639 : INFO : Parallel Initialization
+02-Dec-20 01:52:55 : 7639 : INFO : Training the Linear Regression in pydaal SPMD Mode
