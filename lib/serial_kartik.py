@@ -29,36 +29,71 @@ class Serial_k():
     #Ridge Regression
     def ridgeRegression(self, X_train, X_test, y_train, y_test, target):
         start_time = time.time()
+
+        # Configure a Ridge regression training object
         train_algo = d4p.ridge_regression_training(interceptFlag=True)
+        self.logger.info('Training the Ridge Regression in pydaal Batch/Serial Mode')
+
         train_result = train_algo.compute(X_train, y_train)
         predict_algo = d4p.ridge_regression_prediction()
+
+        # Now train/compute, the result provides the model for prediction
         predict_result = predict_algo.compute(X_test, train_result.model)
         # stop_time = time.time()
         pd_predict = predict_result.prediction
+
+        self.logger.info('Completed Ridge Regression in pydaal Batch/Serial Mode')
+
+        # Compute metrics
         mse = mean_squared_error(y_test, pd_predict)
         r2score = r2_score(y_test, pd_predict)
-        return (pd_predict, mse, r2score, time.time()-start_time)
 
-    def KMeans(self, nClusters, X):
+        # Store the time taken and model metrics
+        self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
+        self.metrics["MSE For Serial Ridge regression Batch"] = mse
+        self.metrics["R2 Score For Serial Ridge regression Batch"] = r2score
+
+        return
+
+    def kMeans(self, data, target):
         kmeans_start_time = time.time()
-        maxIter = 5
-        init_algo = d4p.kmeans_init(nClusters, method="randomDense")
-        train_result = init_algo.compute(X)
+        nClusters = 4
+        maxIter = 25 #fixed maximum number of itertions
+        data = data.drop(target, axis=1)
+
+
+        init_algo = d4p.kmeans_init(nClusters=nClusters, method="randomDense")
+        self.logger.info('Training the KMeans in pydaal Batch/Serial Mode')
+
+        train_result = init_algo.compute(data)
+
         # The results provides the initial centroids
         assert train_result.centroids.shape[0] == nClusters
+
         # configure kmeans main object: we also request the cluster assignments
         algo = d4p.kmeans(nClusters, maxIter, assignFlag=True)
         # compute the clusters/centroids
-        result = algo.compute(X, train_result.centroids)
+        result = algo.compute(data, train_result.centroids)
+
         # Kmeans result objects provide assignments (if requested), centroids, goalFunction, nIterations and objectiveFunction
         assert result.centroids.shape[0] == nClusters
-        assert result.assignments.shape == (X.shape[0], 1)
+        assert result.assignments.shape == (data.shape[0], 1)
         assert result.nIterations <= maxIter
-        return (result, time.time()- kmeans_start_time)
 
-    def svd(self, data):
+        self.logger.info('Completed KMeans in pydaal Batch/Serial Mode')
+
+        self.latency["Serial_KMeans_Batch_Time"] = time.time() - kmeans_start_time
+
+        return
+
+    def svd(self, data, target):
         svd_start_time = time.time()
+
+        data = data.drop(target, axis=1)
+
         algo = d4p.svd()
+        self.logger.info('Training the SVD in pydaal Batch Mode')
+
         result = algo.compute(data)
         assert result.singularValues.shape == (1, data.shape[1])
         assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
@@ -68,22 +103,28 @@ class Serial_k():
             data = data.toarray()  # to make the next assertion work with scipy's csr_matrix
         assert np.allclose(data, np.matmul(np.matmul(result.leftSingularMatrix, np.diag(result.singularValues[0])),
                                              result.rightSingularMatrix))
-        return (result, time.time()-svd_start_time)
 
-    def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):
-        ridge_start = time.time()
-        model = Ridge(alpha=1.0)
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
-        skRidge_mse = mean_squared_error(y_test, y_pred)
-        skRidge_r2score = r2_score(y_test, y_pred)
-        return (y_pred, skRidge_mse, skRidge_r2score, time.time()-ridge_start)
+        self.logger.info('Completed SVD in pydaal Batch/Serial Mode')
 
-    def sklearn_kmeans(self, nClusters, X):
-        skKMeans_start = time.time()
-        kmeans = KMeans(n_clusters=nClusters, random_state=0).fit(X)
-        P = kmeans.predict(X)
-        return (P, time.time() - skKMeans_start)
+        self.latency["Serial_SVD_Batch_Time"] = time.time() - svd_start_time
+        return
+
+
+    #TO BE COMPLETED
+    # def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):
+    #     ridge_start = time.time()
+    #     model = Ridge(alpha=1.0)
+    #     model.fit(X_train, y_train)
+    #     y_pred = model.predict(X_test)
+    #     skRidge_mse = mean_squared_error(y_test, y_pred)
+    #     skRidge_r2score = r2_score(y_test, y_pred)
+    #     return (y_pred, skRidge_mse, skRidge_r2score, time.time()-ridge_start)
+    #
+    # def sklearn_kmeans(self, nClusters, X):
+    #     skKMeans_start = time.time()
+    #     kmeans = KMeans(n_clusters=nClusters, random_state=0).fit(X)
+    #     P = kmeans.predict(X)
+    #     return (P, time.time() - skKMeans_start)
 
 
 
