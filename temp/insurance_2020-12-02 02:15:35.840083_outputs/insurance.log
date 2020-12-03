@@ -1,9 +1,0 @@
-02-Dec-20 02:15:35 : 9817 : INFO : Intell DAAL4PY Logs initiated!
-02-Dec-20 02:15:35 : 9817 : INFO : Current time: 2020-12-02__02.15
-02-Dec-20 02:15:35 : 9817 : INFO :  The Data spliting process started
-02-Dec-20 02:15:35 : 9817 : INFO : Data spliting process done successfuly!!!
-02-Dec-20 02:15:35 : 9817 : INFO : spliting the data frame into Train and test
-02-Dec-20 02:15:35 : 9817 : INFO :  Parallel Execution starts ..!! 
-02-Dec-20 02:15:35 : 9817 : INFO : Parallel Initialization
-02-Dec-20 02:15:36 : 9817 : INFO : Training the Linear Regression in pydaal SPMD Mode
-02-Dec-20 02:15:36 : 9817 : INFO : Completed Linear Regression in pydaal SPMD Mode

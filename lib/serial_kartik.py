@@ -110,6 +110,28 @@ class Serial_k():
         return
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #TO BE COMPLETED
     # def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):
     #     ridge_start = time.time()

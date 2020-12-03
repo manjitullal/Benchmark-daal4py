@@ -3,15 +3,9 @@
 Author - Abhishek Maheshwarappa
 
 Linear regression 
-Sklearn
-'''
-
 
 '''
 
-serial
-
-'''
 import time
 import numpy as np
 import pandas as pd
@@ -64,8 +58,10 @@ class Parallel_a():
             # The prediction result provides prediction
             #assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
 
-        self.logger.info('Completed Linear Regression in pydaal SPMD Mode')
+        
         d4p.daalfini()
+
+        self.logger.info('Completed Linear Regression in pydaal SPMD Mode')
 
         #Compute metrics
         mse = mean_squared_error(y_test, predict_result.prediction)
@@ -75,10 +71,6 @@ class Parallel_a():
         self.metrics['MSE_Parallel_LinearRegression_Pydaal'] = mse
         self.metrics['r2score_Parallel_LinearRegression_Pydaal'] = r2score
         self.latency['Parallel_LinearRegression_Pydaal_Time'] = time.time() - start
-
-        time.sleep(4)
-
-        exit(0)
 
         return 
 
@@ -93,7 +85,7 @@ class Parallel_a():
         d4p.daalinit()
 
         # Train setup
-        file_path = Data_Path + str(d4p.my_procid()) + ".csv"
+        file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
         data = pd.read_csv(file_path)
         data = data.drop(target, axis =1)
 
@@ -108,8 +100,10 @@ class Parallel_a():
         if d4p.my_procid() == 0:
             print("PCA completed", result)
 
-        self.logger.info('Completed PCA in pydaal SPMD Mode')
+       
         d4p.daalfini()
+
+        self.logger.info('Completed PCA in pydaal SPMD Mode')
 
         self.latency['Parallel_PCA_SPMD_Time'] = time.time() - start
 
@@ -138,12 +132,13 @@ class Parallel_a():
 
         #store unique target values
         category_count = len(y.unique())
+        print(category_count)
 
         # Configure a training object
-        train_algo = d4p.multinomial_naive_bayes_training(category_count, distributed=True)
+        train_algo = d4p.multinomial_naive_bayes_training(2, distributed=True)
         self.logger.info('Training the Naive Bayes in pydaal SPMD Mode')
 
-        train_result = talgo.compute(X, y)
+        train_result = train_algo.compute(X, y)
 
         # Now let's do some prediction
         # It runs only on a single node
@@ -158,8 +153,10 @@ class Parallel_a():
 
             print('Naive Bayes Result', presult.prediction)
 
-        self.logger.info('Completed Naive Bayes in pydaal SPMD Mode')
+        
         d4p.daalfini()
+
+        self.logger.info('Completed Naive Bayes in pydaal SPMD Mode')
 
         # Compute metrics - Define classification metrics
         # mse = mean_squared_error(y_test, predict_result.prediction)
