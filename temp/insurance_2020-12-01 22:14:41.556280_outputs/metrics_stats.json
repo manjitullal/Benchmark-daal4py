@@ -1,8 +1,0 @@
-{
-    "MSE_serial_linear_regression_sk_learn": 31333750.92431127,
-    "r2_score_serial_linear_regression_sk_learn": 0.7729494388673591,
-    "MSE_serial_linear_regression_pydaal": 31333750.924311258,
-    "r2_score_serial_linear_regression_pydaal": 0.7729494388673592,
-    "MSE_parallel_linear_regression_sk_learn": 31333750.92431127,
-    "r2_score_parallel_linear_regression_sk_learn": 0.7729494388673591
-}

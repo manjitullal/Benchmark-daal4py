@@ -26,7 +26,7 @@ from sklearn.decomposition import PCA
 
 
 
-class serial_abhi():
+class Serial_a():
 
     def __init__(self, logger, latency, metrics):
             self.logger = logger
@@ -55,7 +55,7 @@ class serial_abhi():
         r2score = r2_score(y_test, y_pred)
 
         # Store the time taken and model metrics
-        self.latency["Serial Linear Regression Batch Time"] = time.time() - start_time
+        self.latency["Serial Linear Regression Batch Time"] = time.time() - start
         self.metrics['MSE_serial_linear_regression_pydaal'] = mse
         self.metrics['r2_score_serial_linear_regression_pydaal'] = r2score
 
@@ -90,7 +90,9 @@ class serial_abhi():
         start = time.time()
 
         # store unique target values
-        category_count = len(y.unique())
+        category_count = len(y_train.unique())
+
+        method ='defaultDense'
 
         # Configure a training object (20 classes)
         train_algo = d4p.multinomial_naive_bayes_training(category_count, method=method)
@@ -102,7 +104,7 @@ class serial_abhi():
         predict_algo = d4p.multinomial_naive_bayes_prediction(category_count, method=method)
 
         # now predict using the model from the training above
-        presult = predict_algo.compute(X_test, tresult.model)
+        presult = predict_algo.compute(X_test, train_result.model)
 
         # Prediction result provides prediction
         assert (presult.prediction.shape == (X_test.shape[0], 1))
@@ -114,6 +116,30 @@ class serial_abhi():
 
         return
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # def serial_linear_sk_learn(self, X_train, X_test, y_train, y_test, target):
     #

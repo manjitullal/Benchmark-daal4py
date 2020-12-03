@@ -1,6 +1,0 @@
-01-Dec-20 03:08:03 : 17399 : INFO : Intell DAAL4PY Logs initiated!
-01-Dec-20 03:08:03 : 17399 : INFO : Current time: 2020-12-01__03.08
-01-Dec-20 03:08:03 : 17399 : INFO : spliting the data frame into Train and test
-01-Dec-20 03:08:03 : 17399 : INFO : Training the parallel Linear Regression in Sk learn
-01-Dec-20 03:08:03 : 17399 : INFO : Predictions done successfully..!!!
-01-Dec-20 03:08:03 : 17399 : INFO : Training the Linear Regression in pydaal

@@ -86,7 +86,7 @@ class Parallel_k():
         d4p.daalinit()
 
         #training setup
-        file_path = Data_Path + str(d4p.my_procid()) + ".csv"
+        file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
         data = pd.read_csv(file_path)
         init_algo = d4p.kmeans_init(nClusters=nClusters, distributed=True, method="plusPlusDense")
 
@@ -129,7 +129,7 @@ class Parallel_k():
         d4p.daalinit()
 
         #Train setup
-        file_path = Data_Path + str(d4p.my_procid()) + ".csv"
+        file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
         data = pd.read_csv(file_path)
         data = data.drop(target, axis =1)
 
