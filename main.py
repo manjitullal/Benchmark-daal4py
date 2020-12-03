@@ -15,8 +15,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-# from lib.serial_abhi import Serial_a
-# from lib.serial_kartik import Serial_k
+from lib.serial_abhi import Serial_a
+from lib.serial_kartik import Serial_k
 from lib.parallel_abhi import Parallel_a
 from lib.parallel_kartik import Parallel_k
 from lib.Numeric import Numeric
@@ -49,6 +49,8 @@ while(1):
             break
         print("\n\nThe selected target Contains Null values, select other target")
     print("\nThe typed value is not present in the columns, try retyping it\n")
+
+classification = input('True or False')
 
 print("Run options")
 print("1. Serial\n")
@@ -168,29 +170,43 @@ class mains():
             serial_a = Serial_a(self.logger, self.latency, self.metrics)
             serial_k = Serial_k(self.logger, self.latency, self.metrics)
 
-            # linear Regression
-            serial_a.regression(X_train, X_test, y_train, y_test, target)
-
-            # Ridge Regression
-            serial_k.ridgeregression(X_train, X_test, y_train, y_test, target)
+            
 
             # Naive bayes
-            serial_a.naivebayes(X_train, X_test, y_train, y_test, target)
+            if classification=='True':
+                serial_a.naiveBayes(X_train, X_test, y_train, y_test, target)
 
-            # K-means Regression
-            serial_a.kmeans(df, target)
+            else:
+                # linear Regression
+                serial_a.linearRegression(X_train, X_test, y_train, y_test, target)
 
-            # PCA Regression
-            serial_a.pca(df, target)
+                # Ridge Regression
+                serial_k.ridgeRegression(X_train, X_test, y_train, y_test, target)
 
-            # SVD Regression
-            serial_a.svd(df, target)
+                # K-means Regression
+                serial_k.kMeans(df, target)
+
+                # PCA Regression
+                serial_a.pca(df, target)
+
+                # SVD Regression
+                serial_k.svd(df, target)
 
             self.logger.info(" Serial Execution ends..!! ")
 
 
         if type_key == 'parallel':
             self.logger.info(" Parallel Execution starts ..!! ")
+
+            print('\n\n Select which algorithim to run?')
+            print("1.Linear Regression - LR ")
+            print("2.Ridge Regression - RR")
+            print("3.Naive Bayes - NB")
+            print("4.K Means - KM")
+            print("5.PCA - P")
+            print("6.SVD - S\n")
+
+            parallel_key = input("Enter the code for the algo required\n\n")
             
             self.logger.info('Parallel Initialization')
             parallel_a = Parallel_a(self.logger, self.latency, self.metrics)
@@ -203,22 +219,28 @@ class mains():
             test_data_path = './dist_data/' + key +'_test'+'.csv'
 
             # parallel linear regression
-            parallel_a.linearRegression(dist_data_path, test_data_path, feature, target)
+            if parallel_key=='LR':
+                parallel_a.linearRegression(dist_data_path, test_data_path, feature, target)
             
             # parallel ridge regression regression
-            parallel_k.ridgeRegression(dist_data_path, test_data_path, feature, target)
+            elif parallel_key =="RR":
+                parallel_k.ridgeRegression(dist_data_path, test_data_path, feature, target)
 
-            # # parallel linear regression
-            # parallel_k.naiveBayes(dist_data_path, test_data_path, feature, target)
+            # parallel linear regression
+            elif parallel_key == "NB":
+                parallel_a.naiveBayes(dist_data_path, test_data_path, feature, target)
 
-            # # parallel linear regression
-            # parallel_k.kMeans(dist_data_path)
+            # parallel linear regression
+            elif parallel_key =="KM":
+                parallel_k.kMeans(dist_data_path)
 
-            # # parallel linear regression
-            # parallel_k.pca(dist_data_path,target)
+            # parallel linear regression
+            elif parallel_key =="P":
+                parallel_a.pca(dist_data_path,target)
 
-            # # parallel linear regression
-            # parallel_k.svd(dist_data_path,target)
+            # parallel linear regression
+            elif parallel_key == "S":
+                parallel_k.svd(dist_data_path,target)
 
 
         self.logger.info(" Parallel Execution ends..!! ")

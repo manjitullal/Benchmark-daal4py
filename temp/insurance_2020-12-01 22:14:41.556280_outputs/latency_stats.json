@@ -1,7 +1,0 @@
-{
-    "Time for serial Linear Regression sk_learn": 0.05240607261657715,
-    "Time for serial Linear Regression pydaal": 0.011996269226074219,
-    "Time for parallel Linear Regression sk_learn": 0.006166934967041016,
-    "Time for serial parallel Regression pydaal": 0.40299534797668457,
-    "Time for serial PCA pydaal": 0.005495548248291016
-}

@@ -45,20 +45,31 @@ class Numeric():
         # dict
         df_dict = {}
 
+        print("before for", categorical_columns)
+
+
+
         for col in categorical_columns:
+            print(col ,' - ', len(df[col].unique()))
             if len(df[col].unique())==2:
                 df[col] = df[col].astype("category")
                 df_dict[col] = dict(
                     enumerate(df[col].cat.categories))
                 df[col] = df[col].cat.codes
-            elif len(df[col].unique())>10:
+            if len(df[col].unique())>10:
+                # print("\nBefore",categorical_columns)
+                # print("\ndf", df.columns)
                 categorical_columns.remove(col)
                 df = df.drop(col, axis = 1)
+                # print("\nafter",categorical_columns)
+                # print("\ndf", df.columns)
+                # print("Col - ",col)
 
         if classification:
             categorical_columns.remove(target)
 
         if categorical_columns:
+            print(categorical_columns)
             data=pd.get_dummies(df[categorical_columns])
             data = data.apply(np.int64)
             df=df.drop(categorical_columns ,axis = 1)
