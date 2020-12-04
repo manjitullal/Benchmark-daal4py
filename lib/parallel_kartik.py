@@ -28,12 +28,12 @@ class Parallel_k():
             self.metrics = metrics
 
     # daal4py Ridge Regression SPMD Mode
-    def ridgeRegression(self, Data_Path,test_data_path, feature, target):
-        start_time = time.time()
+    def ridgeRegression(self, Data_Path,test_data_path, target, n):
+        
 
         #Initialize SPMD mode
-        d4p.daalinit()
-
+        d4p.daalinit(nthreads = n)
+        
         file = Data_Path + str(d4p.my_procid()+1)+".csv"
 
         #Configure a Ridge regression training object
@@ -47,16 +47,23 @@ class Parallel_k():
 
         #test file setup
         test = pd.read_csv(test_data_path)
-        X_test = test[feature]
+
         y_test = test[target]
+        X_test = test.drop(target, axis = 1)
+
+        start_time = time.time()
 
         train_result = train_algo.compute(X, y)
+
+        self.latency["Parallel Ridge Regression SPMD Time"] = time.time() - start_time
 
         #Only process #0 reports results
         if d4p.my_procid() == 0:
             predict_algo = d4p.ridge_regression_prediction()
             # now predict using the model from the training above
             predict_result = predict_algo.compute(X_test, train_result.model)
+            
+            print("Op shape:",predict_result.prediction.shape)
             # The prediction result provides prediction
             # assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
 
@@ -68,7 +75,7 @@ class Parallel_k():
         r2score = r2_score(y_test, predict_result.prediction)
 
         #Store the time taken and model metrics
-        self.latency["Parallel Ridge Regression SPMD Time"] = time.time() - start_time
+        # self.latency["Parallel Ridge Regression SPMD Time"] = time.time() - start_time
         self.metrics["MSE For Parallel Ridge regression SPMD"] = mse
         self.metrics["R2 Score For Parallel Ridge regression SPMD"] = r2score
 
@@ -77,13 +84,13 @@ class Parallel_k():
 
 
     #daal4py KMeans Clustering SPMD Mode
-    def kMeans(self,Data_Path):
+    def kMeans(self,Data_Path,n):
         nClusters = 4
-        kmeans_start_time = time.time()
+
         maxIter = 25 #fixed maximum number of itertions
 
         # Initialize SPMD mode
-        d4p.daalinit()
+        d4p.daalinit(nthreads = n)
 
         #training setup
         file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
@@ -91,7 +98,7 @@ class Parallel_k():
         init_algo = d4p.kmeans_init(nClusters=nClusters, distributed=True, method="plusPlusDense")
 
         self.logger.info('Training the KMeans in pydaal SPMD Mode')
-
+      
         # compute initial centroids
         centroids = init_algo.compute(data).centroids
         init_result = init_algo.compute(data)
@@ -99,34 +106,37 @@ class Parallel_k():
         # configure kmeans main object
         algo = d4p.kmeans(nClusters, maxIter, distributed=True)
 
+
+        kmeans_start_time = time.time()
         # compute the clusters/centroids
         result = algo.compute(data, init_result.centroids)
-
+        self.latency["Parallel_KMeans_SPMD_Time"] = time.time() - kmeans_start_time
         # The result provides the initial centroids
         # assert result.centroids.shape[0] == nClusters
 
         # result is available on all processes - but we print only on root
         if d4p.my_procid() == 0:
             print("KMeans completed", result)
-
+            
         self.logger.info('Completed KMeans in pydaal SPMD Mode')
 
         d4p.daalfini()
 
 
-        self.latency["Parallel_KMeans_SPMD_Time"] = time.time() - kmeans_start_time
+
 
         return 
 
 
 
     # daal4py SVD SPMD Mode
-    def svd(self, Data_Path, target):
+    def svd(self, Data_Path, target,n):
 
-        svd_start_time = time.time()
+        
 
         # Initialize SPMD mode
-        d4p.daalinit()
+        d4p.daalinit(nthreads = n)
+
 
         #Train setup
         file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
@@ -137,8 +147,9 @@ class Parallel_k():
         self.logger.info('Training the SVD in pydaal SPMD Mode')
 
         #SVD result
+        svd_start_time = time.time()
         result = algo.compute(data)
-
+        self.latency["Parallel_SVD_SPMD_Time"] = time.time() - svd_start_time
         # assert result.singularValues.shape == (1, data.shape[1])
         # assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
         # assert result.leftSingularMatrix.shape == data.shape
@@ -156,7 +167,7 @@ class Parallel_k():
         self.logger.info('Completed SVD in pydaal SPMD Mode')
         d4p.daalfini()
         
-        self.latency["Parallel_SVD_SPMD_Time"] = time.time() - svd_start_time
+
 
         return 
 

@@ -1,0 +1,5 @@
+03-Dec-20 19:29:48 : 12630 : INFO : Intell DAAL4PY Logs initiated!
+03-Dec-20 19:29:48 : 12630 : INFO : Current time: 2020-12-03__19.29
+03-Dec-20 19:29:48 : 12630 : INFO :  Parallel Execution starts ..!! 
+03-Dec-20 19:29:54 : 12630 : INFO : Parallel Initialization
+03-Dec-20 19:30:53 : 12630 : INFO : Training the Linear Regression in pydaal SPMD Mode

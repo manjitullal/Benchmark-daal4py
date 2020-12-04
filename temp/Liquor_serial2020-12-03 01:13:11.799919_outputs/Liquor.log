@@ -1,0 +1,23 @@
+03-Dec-20 01:13:11 : 243741 : INFO : Intell DAAL4PY Logs initiated!
+03-Dec-20 01:13:11 : 243741 : INFO : Current time: 2020-12-03__01.13
+03-Dec-20 01:14:46 : 243741 : INFO : spliting the data frame into Train and test
+03-Dec-20 01:14:49 : 243741 : INFO :  Serial Execution starts ..!! 
+03-Dec-20 01:14:49 : 243741 : INFO : Serial Initialization
+03-Dec-20 01:14:49 : 243741 : INFO : Training the Linear Regression in pydaal Batch/Serial Mode
+03-Dec-20 01:14:49 : 243741 : INFO : Completed Linear Regression in pydaal Batch/Serial Mode
+03-Dec-20 01:14:49 : 243741 : INFO : Training the Ridge Regression in pydaal Batch/Serial Mode
+03-Dec-20 01:14:49 : 243741 : INFO : Completed Ridge Regression in pydaal Batch/Serial Mode
+03-Dec-20 01:14:49 : 243741 : INFO : Training the KMeans in pydaal Batch/Serial Mode
+03-Dec-20 01:14:50 : 243741 : INFO : Completed KMeans in pydaal Batch/Serial Mode
+03-Dec-20 01:14:50 : 243741 : INFO : Training the serial PCA in  pydaal
+03-Dec-20 01:14:50 : 243741 : INFO : Training the PCA in pydaal Batch Mode
+03-Dec-20 01:14:50 : 243741 : INFO : Completed PCA in pydaal Batch/Serial Mode
+03-Dec-20 01:14:51 : 243741 : INFO : Training the SVD in pydaal Batch Mode
+03-Dec-20 01:14:52 : 243741 : INFO : Completed SVD in pydaal Batch/Serial Mode
+03-Dec-20 01:14:52 : 243741 : INFO :  Serial Execution ends..!! 
+03-Dec-20 01:14:52 : 243741 : INFO :  Parallel Execution ends..!! 
+03-Dec-20 01:14:52 : 243741 : INFO : Exporting the latency
+03-Dec-20 01:14:52 : 243741 : INFO : Data exported to JSON successfully!
+03-Dec-20 01:14:52 : 243741 : INFO : Exporting the Metrics
+03-Dec-20 01:14:52 : 243741 : INFO : Data exported to JSON successfully!
+03-Dec-20 01:14:52 : 243741 : INFO : Program completed normally

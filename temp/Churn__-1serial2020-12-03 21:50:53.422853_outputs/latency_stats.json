@@ -1,0 +1,7 @@
+{
+    "Serial Linear Regression Batch Time": 0.04261589050292969,
+    "Serial Ridge Regression Batch Time": 0.0012426376342773438,
+    "Serial_KMeans_Batch_Time": 0.018710613250732422,
+    "Serial_PCA_Batch_Time": 0.0036268234252929688,
+    "Serial_SVD_Batch_Time": 0.009138822555541992
+}

@@ -28,8 +28,7 @@ class Serial_k():
 
     #Ridge Regression
     def ridgeRegression(self, X_train, X_test, y_train, y_test, target):
-        start_time = time.time()
-
+        
         # Configure a Ridge regression training object
         train_algo = d4p.ridge_regression_training(interceptFlag=True)
         self.logger.info('Training the Ridge Regression in pydaal Batch/Serial Mode')
@@ -37,8 +36,14 @@ class Serial_k():
         train_result = train_algo.compute(X_train, y_train)
         predict_algo = d4p.ridge_regression_prediction()
 
+        start_time = time.time()
+
+
         # Now train/compute, the result provides the model for prediction
         predict_result = predict_algo.compute(X_test, train_result.model)
+
+        self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
+
         # stop_time = time.time()
         pd_predict = predict_result.prediction
 
@@ -49,14 +54,14 @@ class Serial_k():
         r2score = r2_score(y_test, pd_predict)
 
         # Store the time taken and model metrics
-        self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
+       
         self.metrics["MSE For Serial Ridge regression Batch"] = mse
         self.metrics["R2 Score For Serial Ridge regression Batch"] = r2score
 
         return
 
     def kMeans(self, data, target):
-        kmeans_start_time = time.time()
+        
         nClusters = 4
         maxIter = 25 #fixed maximum number of itertions
         data = data.drop(target, axis=1)
@@ -73,7 +78,13 @@ class Serial_k():
         # configure kmeans main object: we also request the cluster assignments
         algo = d4p.kmeans(nClusters, maxIter, assignFlag=True)
         # compute the clusters/centroids
+
+        kmeans_start_time = time.time()
+
         result = algo.compute(data, train_result.centroids)
+
+        self.latency["Serial_KMeans_Batch_Time"] = time.time() - kmeans_start_time
+
 
         # Kmeans result objects provide assignments (if requested), centroids, goalFunction, nIterations and objectiveFunction
         assert result.centroids.shape[0] == nClusters
@@ -82,19 +93,21 @@ class Serial_k():
 
         self.logger.info('Completed KMeans in pydaal Batch/Serial Mode')
 
-        self.latency["Serial_KMeans_Batch_Time"] = time.time() - kmeans_start_time
-
+        
         return
 
     def svd(self, data, target):
-        svd_start_time = time.time()
-
+        
         data = data.drop(target, axis=1)
 
         algo = d4p.svd()
         self.logger.info('Training the SVD in pydaal Batch Mode')
+        svd_start_time = time.time()
 
         result = algo.compute(data)
+
+        self.latency["Serial_SVD_Batch_Time"] = time.time() - svd_start_time
+
         assert result.singularValues.shape == (1, data.shape[1])
         assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
         assert result.leftSingularMatrix.shape == data.shape
@@ -106,7 +119,7 @@ class Serial_k():
 
         self.logger.info('Completed SVD in pydaal Batch/Serial Mode')
 
-        self.latency["Serial_SVD_Batch_Time"] = time.time() - svd_start_time
+        
         return
 
 

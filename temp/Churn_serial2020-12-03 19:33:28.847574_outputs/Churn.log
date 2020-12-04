@@ -1,0 +1,14 @@
+03-Dec-20 19:33:28 : 12949 : INFO : Intell DAAL4PY Logs initiated!
+03-Dec-20 19:33:28 : 12949 : INFO : Current time: 2020-12-03__19.33
+03-Dec-20 19:33:28 : 12949 : INFO : spliting the data frame into Train and test
+03-Dec-20 19:33:28 : 12949 : INFO :  Serial Execution starts ..!! 
+03-Dec-20 19:33:28 : 12949 : INFO : Serial Initialization
+03-Dec-20 19:33:29 : 12949 : INFO : Training the Naive Bayes in pydaal Batch/Serial Mode
+03-Dec-20 19:33:29 : 12949 : INFO : Completed Naive Bayes in pydaal Batch/Serial Mode
+03-Dec-20 19:33:29 : 12949 : INFO :  Serial Execution ends..!! 
+03-Dec-20 19:33:29 : 12949 : INFO :  Parallel Execution ends..!! 
+03-Dec-20 19:33:29 : 12949 : INFO : Exporting the latency
+03-Dec-20 19:33:29 : 12949 : INFO : Data exported to JSON successfully!
+03-Dec-20 19:33:29 : 12949 : INFO : Exporting the Metrics
+03-Dec-20 19:33:29 : 12949 : INFO : Data exported to JSON successfully!
+03-Dec-20 19:33:29 : 12949 : INFO : Program completed normally
