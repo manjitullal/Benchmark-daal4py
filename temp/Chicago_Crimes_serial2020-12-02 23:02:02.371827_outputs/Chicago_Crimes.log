@@ -1,0 +1,8 @@
+02-Dec-20 23:02:02 : 8393 : INFO : Intell DAAL4PY Logs initiated!
+02-Dec-20 23:02:02 : 8393 : INFO : Current time: 2020-12-02__23.02
+02-Dec-20 23:02:15 : 8393 : INFO :  The Data spliting process started
+02-Dec-20 23:02:34 : 8393 : INFO : Data spliting process done successfuly!!!
+02-Dec-20 23:02:34 : 8393 : INFO : spliting the data frame into Train and test
+02-Dec-20 23:02:35 : 8393 : INFO :  Serial Execution starts ..!! 
+02-Dec-20 23:02:35 : 8393 : INFO : Serial Initialization
+02-Dec-20 23:02:35 : 8393 : INFO : Training the Naive Bayes in pydaal Batch/Serial Mode

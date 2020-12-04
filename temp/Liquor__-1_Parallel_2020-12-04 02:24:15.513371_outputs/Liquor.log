@@ -1,0 +1,12 @@
+04-Dec-20 02:24:15 : 23622 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 02:24:15 : 23622 : INFO : Current time: 2020-12-04__02.24
+04-Dec-20 02:24:15 : 23622 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 02:24:19 : 23622 : INFO : Parallel Initialization
+04-Dec-20 02:24:19 : 23622 : INFO : Training the Ridge Regression in pydaal SPMD Mode
+04-Dec-20 02:24:25 : 23622 : INFO : Completed Ridge Regression in pydaal SPMD Mode
+04-Dec-20 02:24:25 : 23622 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 02:24:25 : 23622 : INFO : Exporting the latency
+04-Dec-20 02:24:25 : 23622 : INFO : Data exported to JSON successfully!
+04-Dec-20 02:24:25 : 23622 : INFO : Exporting the Metrics
+04-Dec-20 02:24:25 : 23622 : INFO : Data exported to JSON successfully!
+04-Dec-20 02:24:25 : 23622 : INFO : Program completed normally

@@ -1,0 +1,14 @@
+03-Dec-20 20:34:46 : 18450 : INFO : Intell DAAL4PY Logs initiated!
+03-Dec-20 20:34:46 : 18450 : INFO : Current time: 2020-12-03__20.34
+03-Dec-20 20:34:46 : 18450 : INFO :  The Data spliting process started
+03-Dec-20 20:34:47 : 18450 : INFO : Data spliting process done successfuly!!!
+03-Dec-20 20:34:47 : 18450 : INFO :  Parallel Execution starts ..!! 
+03-Dec-20 20:34:51 : 18450 : INFO : Parallel Initialization
+03-Dec-20 20:34:51 : 18450 : INFO : Training the SVD in pydaal SPMD Mode
+03-Dec-20 20:34:51 : 18450 : INFO : Completed SVD in pydaal SPMD Mode
+03-Dec-20 20:34:51 : 18450 : INFO :  Parallel Execution ends..!! 
+03-Dec-20 20:34:51 : 18450 : INFO : Exporting the latency
+03-Dec-20 20:34:51 : 18450 : INFO : Data exported to JSON successfully!
+03-Dec-20 20:34:51 : 18450 : INFO : Exporting the Metrics
+03-Dec-20 20:34:51 : 18450 : INFO : Data exported to JSON successfully!
+03-Dec-20 20:34:51 : 18450 : INFO : Program completed normally

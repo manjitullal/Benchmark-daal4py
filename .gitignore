@@ -4,3 +4,5 @@
 __pycache__/
 
 /data
+
+/dist_data

@@ -36,6 +36,8 @@ print()
 
 key = input('Which Data to train? \n')
 
+num = input("enter num of threads")
+
 
 data = pd.read_csv("data/" + key + ".csv", error_bad_lines=False)
 
@@ -47,23 +49,32 @@ while(1):
     if target in list_cols :
         if data[target].isnull().sum()==0:
             break
+        else:
+            data[target] = data[target].fillna(0)
+            break
+
         print("\n\nThe selected target Contains Null values, select other target")
+
     print("\nThe typed value is not present in the columns, try retyping it\n")
 
-classification = input('True or False')
+classification = input('1 - True or 2 - False \n')
 
 print("Run options")
-print("1. Serial\n")
-print("2. Parallel\n")
+print("1 - Serial\n")
+print("2 - Parallel\n")
 type_key = input("Want to run parallel or serial?")
+
+type_key_str = '_Serial_' if type_key=="1" else '_Parallel_'
 
 # run folder which will be unique always
 run_folder = '{}_'.format(
-    key)+type_key + str(datetime.datetime.now()) + '_outputs'
+    key)+'_'+ num +type_key_str  + str(datetime.datetime.now()) + '_outputs'
 # temprary folder location to export the results
 temp_folder = "./temp/"
 # target folder to export all the result
 target_dir = temp_folder + '/' + run_folder
+
+numthreads = int(num)
 
 # checking if the temp folder exists. Create one if not.
 check_folder = os.path.isdir(target_dir)
@@ -142,7 +153,12 @@ class mains():
 
         # creating object for numeric
         num = Numeric(self.logger, self.latency)
-        df, dict_df = num.convert_to_numeric(data, target, False)
+        
+        flag =  True if classification=='1' else False
+
+        print(flag)
+
+        df, dict_df = num.convert_to_numeric(data, target, flag)
 
         # creating data for distrubuted processing in Pydaal
         msk = np.random.rand(len(df)) < 0.8
@@ -158,12 +174,16 @@ class mains():
         feature.remove(target)
 
         # splitting data into train nd test for serial
-        X = df[feature]
-        y = df[target]
-        self.logger.info('spliting the data frame into Train and test')
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state =1693)
+        
 
-        if type_key == 'serial':
+        if type_key == '1':
+
+            X_train = train[feature]
+            y_train = train[target]
+            X_test = test[feature]
+            y_test = test[target]
+
+            self.logger.info('spliting the data frame into Train and test')
             self.logger.info(" Serial Execution starts ..!! ")
             
             self.logger.info('Serial Initialization')
@@ -173,7 +193,7 @@ class mains():
             
 
             # Naive bayes
-            if classification=='True':
+            if classification=='1':
                 serial_a.naiveBayes(X_train, X_test, y_train, y_test, target)
 
             else:
@@ -183,20 +203,25 @@ class mains():
                 # Ridge Regression
                 serial_k.ridgeRegression(X_train, X_test, y_train, y_test, target)
 
-                # K-means Regression
-                serial_k.kMeans(df, target)
+                # linear
+                serial_a.serial_linear_sk_learn(X_train, X_test, y_train, y_test, target)
 
-                # PCA Regression
-                serial_a.pca(df, target)
+            # K-means Regression
+            serial_k.kMeans(df, target)
 
-                # SVD Regression
-                serial_k.svd(df, target)
+            # PCA Regression
+            serial_a.pca(df, target)
+
+            # SVD Regression
+            serial_k.svd(df, target)
 
             self.logger.info(" Serial Execution ends..!! ")
 
 
-        if type_key == 'parallel':
+        if type_key == '2':
             self.logger.info(" Parallel Execution starts ..!! ")
+
+            
 
             print('\n\n Select which algorithim to run?')
             print("1.Linear Regression - LR ")
@@ -220,27 +245,27 @@ class mains():
 
             # parallel linear regression
             if parallel_key=='LR':
-                parallel_a.linearRegression(dist_data_path, test_data_path, feature, target)
+                parallel_a.linearRegression(dist_data_path, test_data_path,  target, numthreads)
             
             # parallel ridge regression regression
             elif parallel_key =="RR":
-                parallel_k.ridgeRegression(dist_data_path, test_data_path, feature, target)
+                parallel_k.ridgeRegression(dist_data_path, test_data_path,  target, numthreads)
 
             # parallel linear regression
             elif parallel_key == "NB":
-                parallel_a.naiveBayes(dist_data_path, test_data_path, feature, target)
+                parallel_a.naiveBayes(dist_data_path, test_data_path,  target, numthreads)
 
             # parallel linear regression
             elif parallel_key =="KM":
-                parallel_k.kMeans(dist_data_path)
+                parallel_k.kMeans(dist_data_path, numthreads)
 
             # parallel linear regression
             elif parallel_key =="P":
-                parallel_a.pca(dist_data_path,target)
+                parallel_a.pca(dist_data_path,target, numthreads)
 
             # parallel linear regression
             elif parallel_key == "S":
-                parallel_k.svd(dist_data_path,target)
+                parallel_k.svd(dist_data_path,target, numthreads)
 
 
         self.logger.info(" Parallel Execution ends..!! ")
