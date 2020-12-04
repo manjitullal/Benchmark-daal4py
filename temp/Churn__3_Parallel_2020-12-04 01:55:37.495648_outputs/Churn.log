@@ -1,0 +1,14 @@
+04-Dec-20 01:55:37 : 4024 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 01:55:37 : 4024 : INFO : Current time: 2020-12-04__01.55
+04-Dec-20 01:55:37 : 4024 : INFO :  The Data spliting process started
+04-Dec-20 01:55:37 : 4024 : INFO : Data spliting process done successfuly!!!
+04-Dec-20 01:55:37 : 4024 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 01:55:41 : 4024 : INFO : Parallel Initialization
+04-Dec-20 01:55:41 : 4024 : INFO : Training the PCA in  pydaal SPMD Mode
+04-Dec-20 01:55:41 : 4024 : INFO : Completed PCA in pydaal SPMD Mode
+04-Dec-20 01:55:41 : 4024 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 01:55:41 : 4024 : INFO : Exporting the latency
+04-Dec-20 01:55:41 : 4024 : INFO : Data exported to JSON successfully!
+04-Dec-20 01:55:41 : 4024 : INFO : Exporting the Metrics
+04-Dec-20 01:55:41 : 4024 : INFO : Data exported to JSON successfully!
+04-Dec-20 01:55:41 : 4024 : INFO : Program completed normally

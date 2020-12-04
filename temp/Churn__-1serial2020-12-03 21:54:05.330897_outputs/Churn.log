@@ -1,0 +1,11 @@
+03-Dec-20 21:54:05 : 20468 : INFO : Intell DAAL4PY Logs initiated!
+03-Dec-20 21:54:05 : 20468 : INFO : Current time: 2020-12-03__21.54
+03-Dec-20 21:54:05 : 20468 : INFO :  The Data spliting process started
+03-Dec-20 21:54:05 : 20468 : INFO : Data spliting process done successfuly!!!
+03-Dec-20 21:54:05 : 20468 : INFO : spliting the data frame into Train and test
+03-Dec-20 21:54:05 : 20468 : INFO :  Serial Execution starts ..!! 
+03-Dec-20 21:54:05 : 20468 : INFO : Serial Initialization
+03-Dec-20 21:54:05 : 20468 : INFO : Training the Linear Regression in pydaal Batch/Serial Mode
+03-Dec-20 21:54:05 : 20468 : INFO : Completed Linear Regression in pydaal Batch/Serial Mode
+03-Dec-20 21:54:05 : 20468 : INFO : Training the Ridge Regression in pydaal Batch/Serial Mode
+03-Dec-20 21:54:05 : 20468 : INFO : Completed Ridge Regression in pydaal Batch/Serial Mode

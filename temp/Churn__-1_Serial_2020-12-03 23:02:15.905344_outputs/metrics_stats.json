@@ -1,0 +1,8 @@
+{
+    "MSE_serial_linear_regression_pydaal": 5.152342545403945e+148,
+    "r2_score_serial_linear_regression_pydaal": -9.984150046253692e+141,
+    "MSE For Serial Ridge regression Batch": 478187.8901402606,
+    "R2 Score For Serial Ridge regression Batch": 0.9073373013655571,
+    "MSE_serial_linear_regression_sk_learn": 478480.87870129064,
+    "r2_score_serial_linear_regression_sk_learn": 0.9072805263796283
+}

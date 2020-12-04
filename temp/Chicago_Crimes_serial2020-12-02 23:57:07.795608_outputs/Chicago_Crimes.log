@@ -1,0 +1,16 @@
+02-Dec-20 23:57:07 : 13182 : INFO : Intell DAAL4PY Logs initiated!
+02-Dec-20 23:57:07 : 13182 : INFO : Current time: 2020-12-02__23.57
+02-Dec-20 23:57:19 : 13182 : INFO :  The Data spliting process started
+02-Dec-20 23:57:38 : 13182 : INFO : Data spliting process done successfuly!!!
+02-Dec-20 23:57:38 : 13182 : INFO : spliting the data frame into Train and test
+02-Dec-20 23:57:39 : 13182 : INFO :  Serial Execution starts ..!! 
+02-Dec-20 23:57:39 : 13182 : INFO : Serial Initialization
+02-Dec-20 23:57:39 : 13182 : INFO : Training the Naive Bayes in pydaal Batch/Serial Mode
+02-Dec-20 23:57:39 : 13182 : INFO : Completed Naive Bayes in pydaal Batch/Serial Mode
+02-Dec-20 23:57:39 : 13182 : INFO :  Serial Execution ends..!! 
+02-Dec-20 23:57:39 : 13182 : INFO :  Parallel Execution ends..!! 
+02-Dec-20 23:57:39 : 13182 : INFO : Exporting the latency
+02-Dec-20 23:57:39 : 13182 : INFO : Data exported to JSON successfully!
+02-Dec-20 23:57:39 : 13182 : INFO : Exporting the Metrics
+02-Dec-20 23:57:39 : 13182 : INFO : Data exported to JSON successfully!
+02-Dec-20 23:57:39 : 13182 : INFO : Program completed normally
