@@ -1,5 +1,7 @@
 '''
-Author : Abhishek Maheshwarappa
+Author : Abhishek Maheshwarappa and Kartik Kumar
+
+Function to export json files
 
 '''
 
@@ -10,15 +12,11 @@ import time
 import pandas as pd
 
 
-
-
 class Input_Ouput_functions():
-
 
     def __init__(self, logger, latency):
         self.logger = logger
         self.latency = latency
-           
 
     def export_to_json(self, dictionary, file_name):
         try:

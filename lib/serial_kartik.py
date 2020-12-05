@@ -20,6 +20,8 @@ from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.cluster import KMeans
 
+
+
 class Serial_k():
     def __init__(self, logger, latency, metrics):
             self.logger = logger
@@ -28,11 +30,16 @@ class Serial_k():
 
     #Ridge Regression
     def ridgeRegression(self, X_train, X_test, y_train, y_test, target):
+        '''
+        Method for Ridge Regression
+
+        '''
         
         # Configure a Ridge regression training object
         train_algo = d4p.ridge_regression_training(interceptFlag=True)
         self.logger.info('Training the Ridge Regression in pydaal Batch/Serial Mode')
-
+        
+        # time the computation time
         start_time = time.time()
         train_result = train_algo.compute(X_train, y_train)
         self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
@@ -44,8 +51,6 @@ class Serial_k():
 
         # stop_time = time.time()
         pd_predict = predict_result.prediction
-
-        self.latency["Overall Serial Ridge Regression Prediction Batch Time"] = time.time() - start_time
 
         self.logger.info('Completed Ridge Regression in pydaal Batch/Serial Mode')
 
@@ -60,6 +65,10 @@ class Serial_k():
         return
 
     def kMeans(self, data, target):
+
+        '''
+        Method for serial running of Kmeans
+        '''
         
         nClusters = 4
         maxIter = 25 #fixed maximum number of itertions
@@ -96,6 +105,10 @@ class Serial_k():
 
 
     def svd(self, data, target):
+
+        '''
+        Method for serial execution of SVD
+        '''
         
         data = data.drop(target, axis=1)
 
@@ -120,52 +133,3 @@ class Serial_k():
 
         
         return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #TO BE COMPLETED
-    # def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):
-    #     ridge_start = time.time()
-    #     model = Ridge(alpha=1.0)
-    #     model.fit(X_train, y_train)
-    #     y_pred = model.predict(X_test)
-    #     skRidge_mse = mean_squared_error(y_test, y_pred)
-    #     skRidge_r2score = r2_score(y_test, y_pred)
-    #     return (y_pred, skRidge_mse, skRidge_r2score, time.time()-ridge_start)
-    #
-    # def sklearn_kmeans(self, nClusters, X):
-    #     skKMeans_start = time.time()
-    #     kmeans = KMeans(n_clusters=nClusters, random_state=0).fit(X)
-    #     P = kmeans.predict(X)
-    #     return (P, time.time() - skKMeans_start)
-
-
-
-
-        
-
-
-
-
-
