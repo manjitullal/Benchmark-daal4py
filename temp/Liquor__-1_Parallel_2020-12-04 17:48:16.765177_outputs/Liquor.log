@@ -1,0 +1,12 @@
+04-Dec-20 17:48:16 : 2340 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 17:48:16 : 2340 : INFO : Current time: 2020-12-04__17.48
+04-Dec-20 17:48:16 : 2340 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 17:48:28 : 2340 : INFO : Parallel Initialization
+04-Dec-20 17:48:33 : 2340 : INFO : Training the Linear Regression in pydaal SPMD Mode
+04-Dec-20 17:48:36 : 2340 : INFO : Completed Linear Regression in pydaal SPMD Mode
+04-Dec-20 17:48:36 : 2340 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 17:48:36 : 2340 : INFO : Exporting the latency
+04-Dec-20 17:48:36 : 2340 : INFO : Data exported to JSON successfully!
+04-Dec-20 17:48:36 : 2340 : INFO : Exporting the Metrics
+04-Dec-20 17:48:36 : 2340 : INFO : Data exported to JSON successfully!
+04-Dec-20 17:48:36 : 2340 : INFO : Program completed normally

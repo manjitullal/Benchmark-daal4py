@@ -1,0 +1,14 @@
+04-Dec-20 22:03:59 : 12869 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 22:03:59 : 12869 : INFO : Current time: 2020-12-04__22.03
+04-Dec-20 22:03:59 : 12869 : INFO :  The Data spliting process started
+04-Dec-20 22:03:59 : 12869 : INFO : Data spliting process done successfuly!!!
+04-Dec-20 22:03:59 : 12869 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 22:04:04 : 12869 : INFO : Parallel Initialization
+04-Dec-20 22:04:04 : 12869 : INFO : Training the Linear Regression in pydaal SPMD Mode
+04-Dec-20 22:04:04 : 12869 : INFO : Completed Linear Regression in pydaal SPMD Mode
+04-Dec-20 22:04:04 : 12869 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 22:04:04 : 12869 : INFO : Exporting the latency
+04-Dec-20 22:04:04 : 12869 : INFO : Data exported to JSON successfully!
+04-Dec-20 22:04:04 : 12869 : INFO : Exporting the Metrics
+04-Dec-20 22:04:04 : 12869 : INFO : Data exported to JSON successfully!
+04-Dec-20 22:04:04 : 12869 : INFO : Program completed normally

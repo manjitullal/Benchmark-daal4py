@@ -1,6 +1,0 @@
-03-Dec-20 00:59:23 : 242368 : INFO : Intell DAAL4PY Logs initiated!
-03-Dec-20 00:59:23 : 242368 : INFO : Current time: 2020-12-03__00.59
-03-Dec-20 01:00:58 : 242368 : INFO : spliting the data frame into Train and test
-03-Dec-20 01:01:01 : 242368 : INFO :  Parallel Execution starts ..!! 
-03-Dec-20 01:01:11 : 242368 : INFO : Parallel Initialization
-03-Dec-20 01:01:15 : 242368 : INFO : Training the KMeans in pydaal SPMD Mode

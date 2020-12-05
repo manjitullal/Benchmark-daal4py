@@ -1,8 +1,0 @@
-03-Dec-20 15:57:57 : 27007 : INFO : Intell DAAL4PY Logs initiated!
-03-Dec-20 15:57:57 : 27007 : INFO : Current time: 2020-12-03__15.57
-03-Dec-20 15:57:57 : 27007 : INFO :  Parallel Execution ends..!! 
-03-Dec-20 15:57:57 : 27007 : INFO : Exporting the latency
-03-Dec-20 15:57:57 : 27007 : INFO : Data exported to JSON successfully!
-03-Dec-20 15:57:57 : 27007 : INFO : Exporting the Metrics
-03-Dec-20 15:57:57 : 27007 : INFO : Data exported to JSON successfully!
-03-Dec-20 15:57:57 : 27007 : INFO : Program completed normally

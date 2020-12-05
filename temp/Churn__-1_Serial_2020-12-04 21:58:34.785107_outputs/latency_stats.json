@@ -1,0 +1,10 @@
+{
+    "Serial Linear Regression Batch Time": 0.01798248291015625,
+    "Overall Serial Linear Regression Prediction Batch Time": 0.020652294158935547,
+    "Serial Ridge Regression Batch Time": 0.028170347213745117,
+    "Overall Serial Ridge Regression Prediction Batch Time": 0.03012681007385254,
+    "Time for serial Linear Regression sk_learn": 0.2948026657104492,
+    "Serial_KMeans_Batch_Time": 0.05030989646911621,
+    "Serial_PCA_Batch_Time": 0.07007718086242676,
+    "Serial_SVD_Batch_Time": 0.018422842025756836
+}
