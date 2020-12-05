@@ -1,0 +1,12 @@
+04-Dec-20 20:53:49 : 275167 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 20:53:49 : 275167 : INFO : Current time: 2020-12-04__20.53
+04-Dec-20 20:53:49 : 275167 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 20:53:51 : 275167 : INFO : Parallel Initialization
+04-Dec-20 20:53:53 : 275167 : INFO : Training the Naive Bayes in pydaal SPMD Mode
+04-Dec-20 20:53:53 : 275167 : INFO : Completed Naive Bayes in pydaal SPMD Mode
+04-Dec-20 20:53:53 : 275167 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 20:53:53 : 275167 : INFO : Exporting the latency
+04-Dec-20 20:53:53 : 275167 : INFO : Data exported to JSON successfully!
+04-Dec-20 20:53:53 : 275167 : INFO : Exporting the Metrics
+04-Dec-20 20:53:53 : 275167 : INFO : Data exported to JSON successfully!
+04-Dec-20 20:53:53 : 275167 : INFO : Program completed normally

@@ -33,19 +33,19 @@ class Serial_k():
         train_algo = d4p.ridge_regression_training(interceptFlag=True)
         self.logger.info('Training the Ridge Regression in pydaal Batch/Serial Mode')
 
-        train_result = train_algo.compute(X_train, y_train)
-        predict_algo = d4p.ridge_regression_prediction()
-
         start_time = time.time()
+        train_result = train_algo.compute(X_train, y_train)
+        self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
 
+        predict_algo = d4p.ridge_regression_prediction()
 
         # Now train/compute, the result provides the model for prediction
         predict_result = predict_algo.compute(X_test, train_result.model)
 
-        self.latency["Serial Ridge Regression Batch Time"] = time.time() - start_time
-
         # stop_time = time.time()
         pd_predict = predict_result.prediction
+
+        self.latency["Overall Serial Ridge Regression Prediction Batch Time"] = time.time() - start_time
 
         self.logger.info('Completed Ridge Regression in pydaal Batch/Serial Mode')
 
@@ -54,7 +54,6 @@ class Serial_k():
         r2score = r2_score(y_test, pd_predict)
 
         # Store the time taken and model metrics
-       
         self.metrics["MSE For Serial Ridge regression Batch"] = mse
         self.metrics["R2 Score For Serial Ridge regression Batch"] = r2score
 
@@ -67,7 +66,7 @@ class Serial_k():
         data = data.drop(target, axis=1)
 
 
-        init_algo = d4p.kmeans_init(nClusters=nClusters, method="randomDense")
+        init_algo = d4p.kmeans_init(nClusters=nClusters, method="plusPlusDense")
         self.logger.info('Training the KMeans in pydaal Batch/Serial Mode')
 
         train_result = init_algo.compute(data)
@@ -76,7 +75,7 @@ class Serial_k():
         assert train_result.centroids.shape[0] == nClusters
 
         # configure kmeans main object: we also request the cluster assignments
-        algo = d4p.kmeans(nClusters, maxIter, assignFlag=True)
+        algo = d4p.kmeans(nClusters, maxIter)
         # compute the clusters/centroids
 
         kmeans_start_time = time.time()
@@ -93,8 +92,8 @@ class Serial_k():
 
         self.logger.info('Completed KMeans in pydaal Batch/Serial Mode')
 
-        
         return
+
 
     def svd(self, data, target):
         
