@@ -36,8 +36,6 @@ class Serial_a():
 
     def linearRegression(self, X_train, X_test, y_train, y_test, target):
 
-        
-
         # Configure a Linear regression training object
         train_algo  = d4p.linear_regression_training(method = 'qrDense')
 
@@ -50,6 +48,7 @@ class Serial_a():
 
         y_pred = d4p.linear_regression_prediction().compute(X_test, lm_trained.model).prediction
 
+        self.latency['Overall Serial Linear Regression Prediction Batch Time'] = time.time() - start
         self.logger.info('Completed Linear Regression in pydaal Batch/Serial Mode')
 
         #Compute metrics
@@ -60,14 +59,12 @@ class Serial_a():
         
         self.metrics['MSE_serial_linear_regression_pydaal'] = mse
         self.metrics['r2_score_serial_linear_regression_pydaal'] = r2score
-
+        
         return
 
 
 
     def pca(self, data, target):
-
-        
 
         data = data.drop(target, axis=1)
 
@@ -75,15 +72,14 @@ class Serial_a():
 
         self.logger.info('Training the serial PCA in  pydaal')
 
-        algo = d4p.pca(resultsToCompute="mean|variance|eigenvalue",nComponents = 10, isDeterministic=True)
-
+        # algo = d4p.pca(resultsToCompute="mean|variance|eigenvalue",nComponents = 10, isDeterministic=True)
+        algo = d4p.pca(method='svdDense')
         self.logger.info('Training the PCA in pydaal Batch Mode')
         start = time.time()
         result = algo.compute(data)
 
-        self.logger.info('Completed PCA in pydaal Batch/Serial Mode')
-
         self.latency["Serial_PCA_Batch_Time"] = time.time() - start
+        self.logger.info('Completed PCA in pydaal Batch/Serial Mode')
 
         return result
 
@@ -93,30 +89,27 @@ class Serial_a():
         # store unique target values
         category_count = len(y_train.unique())
 
-        method ='defaultDense'
-
         # Configure a training object (20 classes)
-        train_algo = d4p.multinomial_naive_bayes_training(category_count, method=method)
+        train_algo = d4p.multinomial_naive_bayes_training(category_count, method='defaultDense')
         self.logger.info('Training the Naive Bayes in pydaal Batch/Serial Mode')
-
-        train_result = train_algo.compute(X_train, y_train)
-
-        # Now let's do some prediction
-        predict_algo = d4p.multinomial_naive_bayes_prediction(category_count, method=method)
-        
         start = time.time()
+        train_result = train_algo.compute(X_train, y_train)
+        self.latency["Serial Naive Bayes Batch Time"] = time.time() - start
+        # Now let's do some prediction
+        predict_algo = d4p.multinomial_naive_bayes_prediction(category_count)
 
         # now predict using the model from the training above
         presult = predict_algo.compute(X_test, train_result.model)
-        self.latency["Serial Naive Bayes Batch Time"] = time.time() - start
+        
         # Prediction result provides prediction
         assert (presult.prediction.shape == (X_test.shape[0], 1))
 
+        # Store the time taken
+        self.latency['Overall Serial Naive bayes Prediction Batch Time'] = time.time() - start
+
         self.logger.info('Completed Naive Bayes in pydaal Batch/Serial Mode')
 
-        # Store the time taken
         
-
         return
         
 

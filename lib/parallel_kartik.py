@@ -30,16 +30,11 @@ class Parallel_k():
     # daal4py Ridge Regression SPMD Mode
     def ridgeRegression(self, Data_Path,test_data_path, target, n):
         
-
         #Initialize SPMD mode
         d4p.daalinit(nthreads = n)
         
         file = Data_Path + str(d4p.my_procid()+1)+".csv"
 
-        #Configure a Ridge regression training object
-        train_algo = d4p.ridge_regression_training(distributed=True, interceptFlag=True)
-        self.logger.info('Training the Ridge Regression in pydaal SPMD Mode')
-        
         #training
         data = pd.read_csv(file)
         X = data.drop(columns=target)
@@ -47,10 +42,13 @@ class Parallel_k():
 
         #test file setup
         test = pd.read_csv(test_data_path)
-
         y_test = test[target]
         X_test = test.drop(target, axis = 1)
 
+        #Configure a Ridge regression training object
+        train_algo = d4p.ridge_regression_training(distributed=True, interceptFlag=True)
+        self.logger.info('Training the Ridge Regression in pydaal SPMD Mode')
+        
         start_time = time.time()
 
         train_result = train_algo.compute(X, y)
@@ -62,10 +60,7 @@ class Parallel_k():
             predict_algo = d4p.ridge_regression_prediction()
             # now predict using the model from the training above
             predict_result = predict_algo.compute(X_test, train_result.model)
-            
-            print("Op shape:",predict_result.prediction.shape)
-            # The prediction result provides prediction
-            # assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
+
 
         self.logger.info('Completed Ridge Regression in pydaal SPMD Mode')
         d4p.daalfini()
@@ -75,7 +70,6 @@ class Parallel_k():
         r2score = r2_score(y_test, predict_result.prediction)
 
         #Store the time taken and model metrics
-        # self.latency["Parallel Ridge Regression SPMD Time"] = time.time() - start_time
         self.metrics["MSE For Parallel Ridge regression SPMD"] = mse
         self.metrics["R2 Score For Parallel Ridge regression SPMD"] = r2score
 
@@ -105,15 +99,11 @@ class Parallel_k():
 
         # configure kmeans main object
         algo = d4p.kmeans(nClusters, maxIter, distributed=True)
-
-
         kmeans_start_time = time.time()
         # compute the clusters/centroids
         result = algo.compute(data, init_result.centroids)
         self.latency["Parallel_KMeans_SPMD_Time"] = time.time() - kmeans_start_time
-        # The result provides the initial centroids
-        # assert result.centroids.shape[0] == nClusters
-
+        
         # result is available on all processes - but we print only on root
         if d4p.my_procid() == 0:
             print("KMeans completed", result)
@@ -123,8 +113,6 @@ class Parallel_k():
         d4p.daalfini()
 
 
-
-
         return 
 
 
@@ -132,11 +120,8 @@ class Parallel_k():
     # daal4py SVD SPMD Mode
     def svd(self, Data_Path, target,n):
 
-        
-
         # Initialize SPMD mode
         d4p.daalinit(nthreads = n)
-
 
         #Train setup
         file_path = Data_Path + str(d4p.my_procid()+1) + ".csv"
@@ -150,39 +135,13 @@ class Parallel_k():
         svd_start_time = time.time()
         result = algo.compute(data)
         self.latency["Parallel_SVD_SPMD_Time"] = time.time() - svd_start_time
-        # assert result.singularValues.shape == (1, data.shape[1])
-        # assert result.rightSingularMatrix.shape == (data.shape[1], data.shape[1])
-        # assert result.leftSingularMatrix.shape == data.shape
-
-        if hasattr(data, 'toarray'):
-            data = data.toarray()  # to make the next assertion work with scipy's csr_matrix
-
+        
         # result is available on all processes - but we print only on root
         if d4p.my_procid() == 0:
             print("SVD completed", result)
             
-        assert np.allclose(data, np.matmul(np.matmul(result.leftSingularMatrix, np.diag(result.singularValues[0])),
-                                           result.rightSingularMatrix))
-
         self.logger.info('Completed SVD in pydaal SPMD Mode')
         d4p.daalfini()
         
-
-
         return 
 
-#TO BE COMPLETED
-    # def sklearn_ridge(self, X_train, X_test, y_train, y_test, target):
-    #     ridge_start = time.time()
-    #     model = Ridge(alpha=1.0)
-    #     model.fit(X_train, y_train)
-    #     y_pred = model.predict(X_test)
-    #     skRidge_mse = mean_squared_error(y_test, y_pred)
-    #     skRidge_r2score = r2_score(y_test, y_pred)
-    #     return (y_pred, skRidge_mse, skRidge_r2score, time.time() - ridge_start)
-    #
-    # def sklearn_kmeans(self, nClusters, X):
-    #     skKMeans_start = time.time()
-    #     kmeans = KMeans(n_clusters=nClusters, random_state=0).fit(X)
-    #     P = kmeans.predict(X)
-    #     return (P, time.time() - skKMeans_start)

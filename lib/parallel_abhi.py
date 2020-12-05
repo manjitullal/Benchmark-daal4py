@@ -26,9 +26,7 @@ class Parallel_a():
         self.metrics = metrics
 
     # daal4py Linear Regression SPMD Mode
-    def linearRegression(self, Data_Path,test_data_path,  target, n):
-
-        
+    def linearRegression(self, Data_Path,test_data_path,  target, n): 
 
         # Initialize SPMD mode
         d4p.daalinit(nthreads = n)
@@ -60,11 +58,11 @@ class Parallel_a():
 
             # now predict using the model from the training above
             predict_result = predict_algo.compute(X_test, train_result.model)
+            self.latency["Overall Parallel Linear Regression Prediction SPMD Time"] = time.time() - start
 
             # The prediction result provides prediction
             #assert predict_result.prediction.shape == (X_test.shape[0], y.shape[1])
-
-        
+ 
         d4p.daalfini()
 
         self.logger.info('Completed Linear Regression in pydaal SPMD Mode')
@@ -84,8 +82,6 @@ class Parallel_a():
 
     # daal4py PCA SPMD Mode
     def pca(self, Data_Path, target,n):
-
-
 
         # Initialize SPMD mode
         d4p.daalinit(nthreads = n)
@@ -108,6 +104,7 @@ class Parallel_a():
         # result is available on all processes - but we print only on root
         if d4p.my_procid() == 0:
             print("PCA completed", result)
+            self.latency["Overall Parallel PCA SPMD Time"] = time.time() - start
 
        
         d4p.daalfini()
@@ -121,8 +118,6 @@ class Parallel_a():
 
     # daal4py Naive Bayes SPMD Mode
     def naiveBayes(self, Data_Path,test_data_path, target, n):
-
-        
 
         # Initialize SPMD mode
         d4p.daalinit(nthreads = n)
@@ -141,10 +136,10 @@ class Parallel_a():
 
         #store unique target values
         category_count = len(y.unique())
-        print(category_count)
+        # print(category_count)
 
         # Configure a training object
-        train_algo = d4p.multinomial_naive_bayes_training(2, distributed=True)
+        train_algo = d4p.multinomial_naive_bayes_training(category_count, method='defaultDense', distributed=True)
         self.logger.info('Training the Naive Bayes in pydaal SPMD Mode')
 
         start = time.time()
@@ -159,12 +154,14 @@ class Parallel_a():
             # now predict using the model from the training above
             presult = predict_algo.compute(X_test, train_result.model)
 
+            self.latency["Overall Parallel Naive Bayes Prediction SPMD Time"] = time.time() - start
+
             # Prediction result provides prediction
             #assert (presult.prediction.shape == (X_test.shape[0], 1))
 
-            print('Naive Bayes Result', presult.prediction)
+            # print('Naive Bayes Result Computed', presult.prediction)
 
-        
+
         d4p.daalfini()
 
         self.logger.info('Completed Naive Bayes in pydaal SPMD Mode')
@@ -176,7 +173,6 @@ class Parallel_a():
         # # Store the time taken and model metrics
         # self.metrics['MSE_Parallel_NaiveBayes_Pydaal'] = mse
         # self.metrics['r2score_Parallel_NaiveBayes_Pydaal'] = r2score
-
 
         return 
 

@@ -1,0 +1,12 @@
+04-Dec-20 21:00:53 : 276070 : INFO : Intell DAAL4PY Logs initiated!
+04-Dec-20 21:00:53 : 276070 : INFO : Current time: 2020-12-04__21.00
+04-Dec-20 21:00:53 : 276070 : INFO :  Parallel Execution starts ..!! 
+04-Dec-20 21:01:00 : 276070 : INFO : Parallel Initialization
+04-Dec-20 21:01:01 : 276070 : INFO : Training the PCA in  pydaal SPMD Mode
+04-Dec-20 21:01:01 : 276070 : INFO : Completed PCA in pydaal SPMD Mode
+04-Dec-20 21:01:01 : 276070 : INFO :  Parallel Execution ends..!! 
+04-Dec-20 21:01:01 : 276070 : INFO : Exporting the latency
+04-Dec-20 21:01:01 : 276070 : INFO : Data exported to JSON successfully!
+04-Dec-20 21:01:01 : 276070 : INFO : Exporting the Metrics
+04-Dec-20 21:01:01 : 276070 : INFO : Data exported to JSON successfully!
+04-Dec-20 21:01:01 : 276070 : INFO : Program completed normally

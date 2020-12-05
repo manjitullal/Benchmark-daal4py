@@ -1,6 +1,6 @@
 '''
 
-Author - Abhishek Maheshwarappa
+Author - Abhishek Maheshwarappa & Kartik Kumar
 
 '''
 
@@ -57,7 +57,7 @@ while(1):
 
     print("\nThe typed value is not present in the columns, try retyping it\n")
 
-classification = input('1 - True or 2 - False \n')
+classification = input('Classification: \n1 - True or 2 - False \n')
 
 print("Run options")
 print("1 - Serial\n")
@@ -67,8 +67,7 @@ type_key = input("Want to run parallel or serial?")
 type_key_str = '_Serial_' if type_key=="1" else '_Parallel_'
 
 # run folder which will be unique always
-run_folder = '{}_'.format(
-    key)+'_'+ num +type_key_str  + str(datetime.datetime.now()) + '_outputs'
+run_folder = '{}_'.format(key)+'_'+ num +type_key_str  + str(datetime.datetime.now()) + '_outputs'
 # temprary folder location to export the results
 temp_folder = "./temp/"
 # target folder to export all the result
@@ -159,6 +158,7 @@ class mains():
         print(flag)
 
         df, dict_df = num.convert_to_numeric(data, target, flag)
+        print(df.shape)
 
         # creating data for distrubuted processing in Pydaal
         msk = np.random.rand(len(df)) < 0.8

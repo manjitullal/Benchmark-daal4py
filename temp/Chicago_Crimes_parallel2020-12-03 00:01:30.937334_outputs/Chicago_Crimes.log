@@ -1,9 +1,0 @@
-03-Dec-20 00:01:30 : 13632 : INFO : Intell DAAL4PY Logs initiated!
-03-Dec-20 00:01:30 : 13632 : INFO : Current time: 2020-12-03__00.01
-03-Dec-20 00:01:42 : 13632 : INFO :  The Data spliting process started
-03-Dec-20 00:02:02 : 13632 : INFO : Data spliting process done successfuly!!!
-03-Dec-20 00:02:02 : 13632 : INFO : spliting the data frame into Train and test
-03-Dec-20 00:02:02 : 13632 : INFO :  Parallel Execution starts ..!! 
-03-Dec-20 00:02:09 : 13632 : INFO : Parallel Initialization
-03-Dec-20 00:02:11 : 13632 : INFO : Training the Naive Bayes in pydaal SPMD Mode
-03-Dec-20 00:02:11 : 13632 : INFO : Completed Naive Bayes in pydaal SPMD Mode
