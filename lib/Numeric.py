@@ -1,3 +1,15 @@
+'''
+Author - Abhishek Maheshwarappa and Kartik Kumar
+
+Converts all non numeric columns or categorical 
+to numerical values
+
+'''
+
+
+
+
+
 import pandas as pd
 import numpy as np
 import time
@@ -12,9 +24,7 @@ class Numeric():
 
     def convert_to_numeric(self, df,target,classification = True):
 
-        # getting categorical and continous dtypes
-
-
+        # getting categorical, continous dtypes and  boolean dtypes
 
         categorical_columns = df.select_dtypes(include=['object']).columns.to_list()
 
@@ -24,6 +34,7 @@ class Numeric():
 
         continous_columns = [x for x in continou_columns if not x in bool_columns]
 
+        # convert boolean into numerical values
         for col in bool_columns:
             df[col] = df[col].astype(int)
 
@@ -62,7 +73,7 @@ class Numeric():
         print("before for", categorical_columns)
 
 
-
+        # label encode the columns with two categorical values
         for col in categorical_columns:            
             if len(df[col].unique())==2:
                 print(col ,' - ', len(df[col].unique()))
@@ -74,6 +85,15 @@ class Numeric():
         if target in categorical_columns: categorical_columns.remove(target)
 
         unwated_cols = []
+
+        '''
+        Remove columns with too 
+        many unqiue values in 
+        categorical columns to 
+        reduce the space of the data
+        
+        '''
+        
         for col in categorical_columns:
 
             l = len(df[col].unique())    
@@ -84,7 +104,11 @@ class Numeric():
         updated_cat_columns = [x for x in categorical_columns if not x in unwated_cols ]
 
 
-
+        '''
+        Generate dummy variables
+        for the categorical columns
+        '''
+        
         if updated_cat_columns:
             data=pd.get_dummies(df[updated_cat_columns])
             data = data.apply(np.int64)
