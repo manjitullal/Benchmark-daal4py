@@ -18,10 +18,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-from lib.serial_abhi import Serial_a
-from lib.serial_kartik import Serial_k
-from lib.parallel_abhi import Parallel_a
-from lib.parallel_kartik import Parallel_k
+from lib.serial_a import Serial_a
+from lib.serial_b import Serial_b
+from lib.parallel_a import Parallel_a
+from lib.parallel_b import Parallel_b
 from lib.Numeric import Numeric
 from lib.Input_Output_files_functions import Input_Ouput_functions
 
@@ -201,7 +201,7 @@ class mains():
 
             self.logger.info('Serial Initialization')
             serial_a = Serial_a(self.logger, self.latency, self.metrics)
-            serial_k = Serial_k(self.logger, self.latency, self.metrics)
+            Serial_b = Serial_b(self.logger, self.latency, self.metrics)
 
             # Naive bayes
             if classification == '1':
@@ -213,7 +213,7 @@ class mains():
                     X_train, X_test, y_train, y_test, target)
 
                 # Ridge Regression
-                serial_k.ridgeRegression(
+                Serial_b.ridgeRegression(
                     X_train, X_test, y_train, y_test, target)
 
                 # linear
@@ -221,13 +221,13 @@ class mains():
                     X_train, X_test, y_train, y_test, target)
 
             # K-means Regression
-            serial_k.kMeans(df, target)
+            Serial_b.kMeans(df, target)
 
             # PCA Regression
             serial_a.pca(df, target)
 
             # SVD Regression
-            serial_k.svd(df, target)
+            Serial_b.svd(df, target)
 
             self.logger.info(" Serial Execution ends..!! ")
 
@@ -243,11 +243,11 @@ class mains():
             print("5.PCA - P")
             print("6.SVD - S\n")
 
-            parallel_key = input("Enter the code for the algo required\n\n")
+            Parallel_bey = input("Enter the code for the algo required\n\n")
 
             self.logger.info('Parallel Initialization')
             parallel_a = Parallel_a(self.logger, self.latency, self.metrics)
-            parallel_k = Parallel_k(self.logger, self.latency, self.metrics)
+            Parallel_b = Parallel_b(self.logger, self.latency, self.metrics)
 
             # path for distrubted data and test data
 
@@ -255,31 +255,31 @@ class mains():
             test_data_path = './dist_data/' + key + '_test'+'.csv'
 
             # parallel linear regression
-            if parallel_key == 'LR':
+            if Parallel_bey == 'LR':
                 parallel_a.linearRegression(
                     dist_data_path, test_data_path,  target, numthreads)
 
             # parallel ridge regression regression
-            elif parallel_key == "RR":
-                parallel_k.ridgeRegression(
+            elif Parallel_bey == "RR":
+                Parallel_b.ridgeRegression(
                     dist_data_path, test_data_path,  target, numthreads)
 
             # parallel linear regression
-            elif parallel_key == "NB":
+            elif Parallel_bey == "NB":
                 parallel_a.naiveBayes(
                     dist_data_path, test_data_path,  target, numthreads)
 
             # parallel linear regression
-            elif parallel_key == "KM":
-                parallel_k.kMeans(dist_data_path, numthreads)
+            elif Parallel_bey == "KM":
+                Parallel_b.kMeans(dist_data_path, numthreads)
 
             # parallel linear regression
-            elif parallel_key == "P":
+            elif Parallel_bey == "P":
                 parallel_a.pca(dist_data_path, target, numthreads)
 
             # parallel linear regression
-            elif parallel_key == "S":
-                parallel_k.svd(dist_data_path, target, numthreads)
+            elif Parallel_bey == "S":
+                Parallel_b.svd(dist_data_path, target, numthreads)
 
         self.logger.info(" Parallel Execution ends..!! ")
 
