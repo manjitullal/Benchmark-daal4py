@@ -37,7 +37,7 @@
 ```python main.py```
 
 
-### **Custom logger **
+### **Custom logger**
 
 This helps to track all the things happening in the entire script and log them to track any errors while debugging.
 
