@@ -8,7 +8,7 @@
 
 ## **Steps to setup environment to use Daal4py**
 
-1. We have a daal4py.yml file on the github repo and in the zip folder, locate it.
+1. We have a environment.yml file locate it.
 
 2. Go to anaconda or miniconda installed on the cluster and create the virtual environment.
 
