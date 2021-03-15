@@ -64,3 +64,7 @@ Serial script and parallel script contains the following Algorithms
 6. K-Means
 
 These scripts are all commented on for easy understanding.
+
+### References ###
+
+https://intelpython.github.io/daal4py/
